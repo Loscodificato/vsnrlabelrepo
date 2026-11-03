@@ -1,0 +1,227 @@
+{
+  "operatorProfiles": [
+    {
+      "id": "prof_1",
+      "code": "0070",
+      "name": "Losco",
+      "role": "Executive Label Manager",
+      "updatedAt": ""
+    },
+    {
+      "id": "prof_2",
+      "code": "0001",
+      "name": "Blacklord",
+      "role": "A&R & Produzione",
+      "updatedAt": ""
+    },
+    {
+      "id": "prof_3",
+      "code": "0002",
+      "name": "Riovale",
+      "role": "Direzione Artistica",
+      "updatedAt": ""
+    },
+    {
+      "id": "prof_4",
+      "code": "0003",
+      "name": "Operatore 0003",
+      "role": "Management & Catalogo",
+      "updatedAt": ""
+    }
+  ],
+  "artists": [
+    {
+      "contractDate": "",
+      "contractDetails": "Split Master 70/30",
+      "contractFileName": "PreContratto.pdf",
+      "contractFileUrl": "/uploads/contracts/021e0d9dd19c41a88a793a82a2be29f5.pdf",
+      "contractStatus": "Firmato e Attivo",
+      "createdAt": "2026-10-29T15:46:48.243Z",
+      "createdBy": "Losco (0070)",
+      "firstName": "Valerio",
+      "id": "art_1793288808243_g03",
+      "lastName": "Belli",
+      "stageName": "Riovale",
+      "updatedAt": "2026-10-29T15:47:24.820Z"
+    }
+  ],
+  "tracks": [],
+  "appointments": [],
+  "notifications": [],
+  "dismissedNotificationIds": [],
+  "activityLog": [
+    {
+      "id": "log_1793723855392_ogqt",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-11-03T16:37:35.392Z"
+    },
+    {
+      "id": "log_1793323045869_kcro",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T01:17:25.869Z"
+    },
+    {
+      "id": "log_1793322503610_nxs8",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T01:08:23.610Z"
+    },
+    {
+      "id": "log_1793322109508_fjgs",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T01:01:49.508Z"
+    },
+    {
+      "id": "log_1793322089682_0fx0",
+      "operatorName": "Blacklord",
+      "operatorCode": "0001",
+      "action": "Accesso effettuato in VNSR da Blacklord",
+      "timestamp": "2026-10-30T01:01:29.682Z"
+    },
+    {
+      "id": "log_1793321927525_25wp",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:58:47.525Z"
+    },
+    {
+      "id": "log_1793321746290_fp5d",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:55:46.290Z"
+    },
+    {
+      "id": "log_1793321703302_ny4p",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:55:03.302Z"
+    },
+    {
+      "id": "log_1793321679494_d65v",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:54:39.494Z"
+    },
+    {
+      "id": "log_1793320471595_ktva",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:34:31.595Z"
+    },
+    {
+      "id": "log_1793319913073_d0wa",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:25:13.073Z"
+    },
+    {
+      "id": "log_1793319901456_dog0",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-10-30T00:25:01.456Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793319638021_f583",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-30T00:20:38.021Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793318580291_6r5g",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-30T00:03:00.291Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793317569072_kqi2",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T23:46:09.072Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793317179020_a60k",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T23:39:39.020Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793289930882_ybej",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T16:05:30.882Z"
+    },
+    {
+      "action": "Eliminata anagrafica artista \"KRYPTO\"",
+      "id": "log_1793288883271_gyqe",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:48:03.271Z"
+    },
+    {
+      "action": "Aggiornata anagrafica/contratto dell'artista \"Riovale\"",
+      "id": "log_1793288844863_oau5",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:47:24.863Z"
+    },
+    {
+      "action": "Aggiunto nuovo artista in VNSR: \"Riovale\" (Valerio Belli)",
+      "id": "log_1793288808243_76r6",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:46:48.243Z"
+    },
+    {
+      "action": "Aggiornata traccia \"Notte di Cristallo\" (EGO ELLE — Prod. ALXNDR MOROU)",
+      "id": "log_1793288742648_8diz",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:45:42.648Z"
+    },
+    {
+      "action": "Aggiornata traccia \"Notte di Cristallo\" (EGO ELLE — Prod. ALXNDR MOROU)",
+      "id": "log_1793288742634_3pm2",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:45:42.634Z"
+    },
+    {
+      "action": "Accesso effettuato in VNSR da Losco",
+      "id": "log_1793288442901_3ewx",
+      "operatorCode": "0070",
+      "operatorName": "Losco",
+      "timestamp": "2026-10-29T15:40:42.901Z"
+    },
+    {
+      "action": "Inizializzato gestionale sincronizzato VNSR",
+      "id": "log_vnsr_init",
+      "operatorCode": "SYNC",
+      "operatorName": "VNSR System",
+      "timestamp": "2026-10-29T15:40:37.954Z"
+    }
+  ],
+  "deletedIds": [
+    "art_vnsr_demo1",
+    "trk_vnsr_demo1"
+  ],
+  "version": 1793723855402
+}

@@ -1,0 +1,53 @@
+{
+  "name": "vsnr-gestionale",
+  "version": "1.0.7",
+  "description": "VSNR — Gestionale Etichetta Discografica (Desktop App)",
+  "main": "electron.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  },
+  "devDependencies": {
+    "electron": "^45.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.vsnr.gestionale",
+    "productName": "VSNR Gestionale",
+    "asar": false,
+    "files": [
+      "**/*",
+      "!dist/**/*",
+      "!release/**/*",
+      "!*.zip"
+    ],
+    "mac": {
+      "category": "public.app-category.music",
+      "icon": "logo-vnsr.png",
+      "target": [
+        "dir",
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "logo-vnsr.png",
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "allowScripts": {
+    "electron@33.4.11": true
+  }
+}
