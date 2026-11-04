@@ -5,28 +5,28 @@
       "code": "0070",
       "name": "Losco",
       "role": "Executive Label Manager",
-      "updatedAt": ""
+      "updatedAt": "2026-10-30T10:51:21.077Z"
     },
     {
       "id": "prof_2",
       "code": "0001",
       "name": "Blacklord",
-      "role": "A&R & Produzione",
-      "updatedAt": ""
+      "role": "Direzione Artistica e Management",
+      "updatedAt": "2026-10-30T10:51:21.077Z"
     },
     {
       "id": "prof_3",
       "code": "0002",
       "name": "Riovale",
-      "role": "Direzione Artistica",
-      "updatedAt": ""
+      "role": "Executive Label Manager",
+      "updatedAt": "2026-10-30T10:51:21.077Z"
     },
     {
       "id": "prof_4",
       "code": "0003",
-      "name": "Operatore 0003",
-      "role": "Management & Catalogo",
-      "updatedAt": ""
+      "name": "Alxndr",
+      "role": "A&R & Produzione",
+      "updatedAt": "2026-10-30T10:51:21.077Z"
     }
   ],
   "artists": [
@@ -50,6 +50,13 @@
   "notifications": [],
   "dismissedNotificationIds": [],
   "activityLog": [
+    {
+      "id": "log_1793790196546_qxo2",
+      "operatorName": "Losco",
+      "operatorCode": "0070",
+      "action": "Accesso effettuato in VNSR da Losco",
+      "timestamp": "2026-11-04T11:03:16.546Z"
+    },
     {
       "id": "log_1793723855392_ogqt",
       "operatorName": "Losco",
@@ -223,5 +230,5 @@
     "art_vnsr_demo1",
     "trk_vnsr_demo1"
   ],
-  "version": 1793723855402
+  "version": 1793790196558
 }
