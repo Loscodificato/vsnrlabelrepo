@@ -1,6 +1,6 @@
 {
   "name": "vsnr-gestionale",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "VSNR — Gestionale Etichetta Discografica (Desktop App)",
   "main": "electron.js",
   "private": true,

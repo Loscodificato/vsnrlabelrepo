@@ -1288,9 +1288,13 @@ export function switchTab(tabName) {
 window.addEventListener(
   "wheel",
   (e) => {
-    const inModal =
-      e.target && e.target.closest && e.target.closest(".modal-backdrop.open .modal-dialog");
-    if (inModal) {
+    const scrollableTarget =
+      e.target &&
+      e.target.closest &&
+      e.target.closest(
+        "#notificationsListContainer, #notificationsDropdownPanel, .modal-backdrop.open .modal-dialog, #contractBuilderForm, #firebaseTestOutput, .artists-grid, .tracks-grid, #activityContainer, #selectedDayAppointmentsList, #popupSelectedDayAppointmentsList"
+      );
+    if (scrollableTarget) {
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
       }
@@ -1304,9 +1308,13 @@ window.addEventListener(
 window.addEventListener(
   "touchmove",
   (e) => {
-    const inModal =
-      e.target && e.target.closest && e.target.closest(".modal-backdrop.open .modal-dialog");
-    if (!inModal) {
+    const scrollableTarget =
+      e.target &&
+      e.target.closest &&
+      e.target.closest(
+        "#notificationsListContainer, #notificationsDropdownPanel, .modal-backdrop.open .modal-dialog, #contractBuilderForm, #firebaseTestOutput, .artists-grid, .tracks-grid, #activityContainer, #selectedDayAppointmentsList, #popupSelectedDayAppointmentsList"
+      );
+    if (!scrollableTarget) {
       e.preventDefault();
     }
   },

@@ -3201,3 +3201,137 @@ h3 em,
   border: 1px solid rgba(192, 132, 252, 0.55);
   color: #e9d5ff;
 }
+/* 1. Modale Contratto PDF (Overflow & Griglia Compatta) */
+.contract-builder-dialog {
+  width: 100% !important;
+  max-width: 880px !important;
+  max-height: 92vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 20px 24px !important;
+  box-sizing: border-box !important;
+}
+
+.contract-builder-dialog .modal-header {
+  flex-shrink: 0;
+  margin-bottom: 12px !important;
+  padding-bottom: 10px !important;
+}
+
+#contractBuilderForm,
+.contract-builder-dialog form {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  padding-right: 10px !important;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+}
+
+.contract-builder-dialog .contract-section-card {
+  padding: 12px 14px !important;
+  margin-bottom: 12px !important;
+}
+
+.contract-builder-dialog .contract-section-title {
+  margin-bottom: 10px !important;
+  padding-bottom: 6px !important;
+}
+
+.contract-builder-dialog .form-grid,
+.contract-builder-dialog .form-grid-3 {
+  gap: 8px 10px !important;
+}
+
+.contract-builder-dialog .form-group {
+  gap: 4px !important;
+  margin-bottom: 6px !important;
+}
+
+.contract-builder-dialog .form-control {
+  padding: 8px 11px !important;
+  font-size: 13px !important;
+}
+
+/* 2. Tasti Header (Impostazioni e Notifiche 44x44px con SVG 22px + Rotazione Gear) */
+#notificationsBellBtn,
+#openSettingsBtn {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  overflow: visible !important;
+}
+
+#notificationsBellBtn svg,
+#openSettingsBtn svg,
+.notifications-bell-svg,
+.settings-gear-svg {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+}
+
+.settings-gear-svg {
+  transition: transform 0.3s ease !important;
+}
+
+.settings-gear-svg:hover,
+#openSettingsBtn:hover .settings-gear-svg {
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+/* 3. Scroll Pannello Notifiche (Mouse & Trackpad Mac Nativo) */
+.app-header,
+.operator-bar,
+.notifications-bell-wrapper {
+  overflow: visible !important;
+}
+
+#notificationsDropdownPanel {
+  max-height: 450px !important;
+  display: none;
+  flex-direction: column;
+  pointer-events: auto !important;
+}
+
+#notificationsDropdownPanel.open {
+  display: flex !important;
+}
+
+#notificationsListContainer {
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  pointer-events: auto !important;
+  -webkit-overflow-scrolling: touch;
+  max-height: 360px !important;
+}
+
+/* 4. Modale Test Server (Prevenzione Deformazione <pre id="firebaseTestOutput">) */
+#syncModal .modal-dialog {
+  width: 100% !important;
+  max-width: 650px !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#firebaseTestOutput {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: anywhere !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  max-height: 200px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}

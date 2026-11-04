@@ -94,44 +94,44 @@
         <span>Cambia Codice</span>
       </button>
 
-      <!-- SEZIONE NOTIFICHE -->
+<!-- SEZIONE NOTIFICHE -->
       <div class="notifications-bell-wrapper" id="notificationsBellWrapper">
         <button
           type="button"
           id="notificationsBellBtn"
           class="notifications-bell-btn"
-          title="Notifiche Uscite & Promemoria Operatore"
+          title="Notifiche"
           aria-label="Notifiche"
           aria-expanded="false"
         >
-          <svg class="notifications-bell-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg class="notifications-bell-svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M12 2C10.9 2 10 2.9 10 4V4.29C7.12 5.14 5 7.82 5 11V16L3 18V19H21V18L19 16V11C19 7.82 16.88 5.14 14 4.29V4C14 2.9 13.1 2 12 2ZM12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22Z" />
           </svg>
           <span id="notificationsCountBadge" class="notifications-count-badge" style="display: none;">0</span>
         </button>
 
+        <!-- FINESTRELLA A SCOMPARSA DELLE NOTIFICHE -->
         <div id="notificationsDropdownPanel" class="notifications-dropdown-panel" aria-hidden="true">
           <div class="notifications-dropdown-header">
-            <div>
-              <div class="notifications-dropdown-title">🔔 Notifiche</div>
+            <div class="notifications-dropdown-title">
+              🔔 Notifiche
             </div>
             <button type="button" id="clearAllNotificationsBtn" class="notifications-clear-all-btn" title="Cancella tutte le notifiche">
               🗑️ Cancella tutte
             </button>
           </div>
+
           <div id="notificationsListContainer" class="notifications-list-container"></div>
         </div>
       </div>
 
       <button type="button" id="openSettingsBtn" class="btn btn-secondary btn-sm settings-gear-btn" title="Impostazioni" aria-label="Impostazioni">
-        <svg class="settings-gear-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="settings-gear-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
         </svg>
       </button>
     </div>
-    <div class="vsnr-header-line"></div>
-  </header>
 
   <!-- ==================== SHELL PRINCIPALE ==================== -->
   <div class="app-shell">
@@ -289,7 +289,10 @@
             <button type="button" id="forceSyncNowBtn" class="btn btn-secondary btn-sm">🔄 Forza Sync</button>
             <button type="button" id="saveSyncConfigBtn" class="btn btn-primary btn-sm">💾 Salva Cloud</button>
           </div>
-          <pre id="firebaseTestOutput" style="display: none;"></pre>
+          <pre
+  id="firebaseTestOutput"
+  style="display: none; margin-top: 12px; background: #080a10; border: 1px solid var(--border-strong); border-radius: 10px; padding: 12px; font-size: 12px; color: #34d399; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; overflow-y: auto; max-height: 200px; width: 100%; box-sizing: border-box;"
+></pre>
         </div>
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
           <span style="font-size: 13px; color: var(--text-secondary);">Importa un file <code>.json</code>?</span>
