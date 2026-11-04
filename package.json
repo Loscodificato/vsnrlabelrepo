@@ -1,6 +1,6 @@
 {
   "name": "vsnr-gestionale",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "VSNR — Gestionale Etichetta Discografica (Desktop App)",
   "main": "electron.js",
   "private": true,
@@ -28,18 +28,16 @@
       "!*.zip"
     ],
     "mac": {
-      "category": "public.app-category.music",
-      "icon": "logo-vnsr.png",
-      "target": [
-        "dir",
-        "dmg"
+      "target": "dmg",
+      "arch": [
+        "x64",
+        "arm64"
       ]
     },
     "win": {
-      "icon": "logo-vnsr.png",
       "target": [
-        "portable",
-        "nsis"
+        "nsis",
+        "portable"
       ]
     },
     "nsis": {
