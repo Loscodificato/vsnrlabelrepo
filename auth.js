@@ -110,4 +110,3 @@ export function updateOperatorUI() {
   const nameEl = document.getElementById("activeOperatorName");
   if (nameEl) nameEl.textContent = op ? stripPinCodes(op.name) : "—";
 }
-}
