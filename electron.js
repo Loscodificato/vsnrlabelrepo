@@ -23,19 +23,24 @@ try {
   AdmZip = require("adm-zip");
 } catch (_) {}
 
+// Configurazione Sicura Asar-Friendly (userData)
+const safeDataPath = path.join(app.getPath('userData'), 'data');
+if (!fs.existsSync(safeDataPath)) {
+  fs.mkdirSync(safeDataPath, { recursive: true });
+}
+const safeUploadsPath = path.join(app.getPath('userData'), 'uploads');
+if (!fs.existsSync(safeUploadsPath)) {
+  fs.mkdirSync(safeUploadsPath, { recursive: true });
+}
+
 const PORT = Number(process.env.PORT) || 8080;
 const HOST = "127.0.0.1";
 const BASE_DIR = __dirname;
-const DATA_DIR = path.join(BASE_DIR, "data");
-const UPLOADS_DIR = path.join(BASE_DIR, "uploads");
-const DB_FILE = path.join(DATA_DIR, "db.json");
-const VERSION_FILE = path.join(BASE_DIR, "version.json");
-const RELEASE_BUNDLE_FILE = path.join(BASE_DIR, "release_bundle.json");
+const DB_FILE = path.join(safeDataPath, "db.json");
+const VERSION_FILE = path.join(safeDataPath, "version.json");
+const RELEASE_BUNDLE_FILE = path.join(safeDataPath, "release_bundle.json");
 const DEFAULT_FIREBASE_DB_URL =
   "https://vsnr-management-default-rtdb.europe-west1.firebasedatabase.app";
-
-fs.mkdirSync(DATA_DIR, { recursive: true });
-fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
 const CORE_UPDATE_FILES = [
   "index.html",
@@ -213,7 +218,6 @@ function bumpSemver(verStr) {
 }
 
 function buildReleaseBundleNode(forceBump = false) {
-  // Se è presente updater.py, delega in modo trasparente o usa il builder nativo Node.js
   const currentSha = computeWorkspaceSha256();
   const localVer = loadLocalVersion();
   const oldSha = localVer.sha256 || "";
@@ -340,7 +344,6 @@ function readRequestBody(req) {
 
 function startBackgroundServer() {
   return new Promise((resolve, reject) => {
-    // Se esiste un modulo server.js dedicato che esporta un server o si avvia sulla porta 8080, lo supporta
     const customServerPath = path.join(BASE_DIR, "server.js");
     if (fs.existsSync(customServerPath)) {
       try {
@@ -404,23 +407,34 @@ function startBackgroundServer() {
           });
         }
 
-        // Static file serving (index.html, main.js, styles.css, uploads, ecc.)
+        // Static file serving (index.html, main.js, styles.css, ecc.)
         let relPath = decodeURIComponent(pathname === "/" ? "/index.html" : pathname);
         relPath = relPath.replace(/^\/+/, "");
-        const safePath = path.normalize(path.join(BASE_DIR, relPath));
-        if (!safePath.startsWith(BASE_DIR)) {
-          res.writeHead(403);
-          return res.end("Forbidden");
+        
+        // Risoluzione dinamica dei file caricati (uploads) verso cartella sicura
+        let targetFile = "";
+        if (relPath.startsWith("uploads/")) {
+            targetFile = path.normalize(path.join(safeUploadsPath, relPath.replace(/^uploads\//, "")));
+            if (!targetFile.startsWith(safeUploadsPath)) {
+                res.writeHead(403);
+                return res.end("Forbidden");
+            }
+        } else {
+            targetFile = path.normalize(path.join(BASE_DIR, relPath));
+            if (!targetFile.startsWith(BASE_DIR)) {
+                res.writeHead(403);
+                return res.end("Forbidden");
+            }
         }
 
-        if (fs.existsSync(safePath) && fs.statSync(safePath).isFile()) {
-          const ext = path.extname(safePath).toLowerCase();
+        if (fs.existsSync(targetFile) && fs.statSync(targetFile).isFile()) {
+          const ext = path.extname(targetFile).toLowerCase();
           const contentType = MIME_TYPES[ext] || "application/octet-stream";
           res.writeHead(200, {
             "Content-Type": contentType,
             "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
           });
-          return fs.createReadStream(safePath).pipe(res);
+          return fs.createReadStream(targetFile).pipe(res);
         }
 
         res.writeHead(404);
@@ -481,7 +495,7 @@ function startBackgroundServer() {
             const fileBuffer = Buffer.from(b64Data, "base64");
             const ext = path.extname(filename).toLowerCase() || ".bin";
 
-            const targetDir = path.join(UPLOADS_DIR, folder);
+            const targetDir = path.join(safeUploadsPath, folder);
             fs.mkdirSync(targetDir, { recursive: true });
 
             const uniqueName = `${crypto.randomUUID().replace(/-/g, "")}${ext}`;
@@ -527,7 +541,6 @@ function startBackgroundServer() {
 
     localServer.on("error", (err) => {
       if (err.code === "EADDRINUSE") {
-        // Se la porta 8080 è già attiva in background, prosegui direttamente
         resolve();
       } else {
         reject(err);
@@ -560,7 +573,6 @@ function createMainWindow() {
 
   mainWindow.loadURL(`http://${HOST}:${PORT}`);
 
-  // Apre eventuali link esterni (es. PDF contratti in nuova scheda) in finestra dedicata o browser di sistema
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith(`http://${HOST}:${PORT}`)) {
       return { action: "allow" };
