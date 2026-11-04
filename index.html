@@ -35,7 +35,7 @@
       </div>
       <h1 class="auth-title">VNSR <em>Label</em></h1>
       <p class="auth-subtitle">
-        Inserisci il tuo codice operatore a 4 cifre per accedere all'ecosistema gestionale VNSR.
+        Inserisci il tuo codice operatore a 4 cifre per accedere.
       </p>
 
       <div class="pin-input-wrapper">
@@ -71,17 +71,7 @@
   <!-- ==================== HEADER PRINCIPALE (STILE VSNRLABEL.IT) ==================== -->
   <header class="app-header">
     <div class="brand-area">
-      <div class="brand-logo-box">
-        <img src="logo-vnsr-wide.png" alt="VNSR" class="brand-logo-img" />
-      </div>
-      <div class="brand-text">
-        <div class="vsnr-division-pill">Music division by VSNR®</div>
-        <h1>VNSR <em>Label</em></h1>
-      </div>
-    </div>
-
-    <div class="header-center-tagline">
-      <span>Tre dimensioni. <em>Un solo ecosistema.</em></span>
+      <img src="logo-vnsr-wide.png" alt="VNSR" class="brand-logo-img" />
     </div>
 
     <div class="operator-bar">
@@ -93,7 +83,6 @@
       <div class="operator-pill" title="Operatore attualmente in sessione">
         <span class="operator-dot"></span>
         <span id="activeOperatorName" class="operator-name">—</span>
-        <span id="activeOperatorCode" class="operator-code">----</span>
       </div>
       <button type="button" id="switchOperatorBtn" class="btn btn-secondary btn-sm switch-operator-btn" title="Seleziona Operatore / Cambia Codice">
         <span class="operator-silhouette-key" aria-hidden="true">
@@ -105,7 +94,7 @@
         <span>Cambia Codice</span>
       </button>
 
-      <!-- SEZIONE NOTIFICHE: CAMPANELLINA SEMPRE VIOLA CON NUMERETTO + FINESTRELLA A SCOMPARSA -->
+      <!-- SEZIONE NOTIFICHE -->
       <div class="notifications-bell-wrapper" id="notificationsBellWrapper">
         <button
           type="button"
@@ -121,25 +110,16 @@
           <span id="notificationsCountBadge" class="notifications-count-badge" style="display: none;">0</span>
         </button>
 
-        <!-- FINESTRELLA A SCOMPARSA DELLE NOTIFICHE -->
         <div id="notificationsDropdownPanel" class="notifications-dropdown-panel" aria-hidden="true">
           <div class="notifications-dropdown-header">
             <div>
-              <div class="notifications-dropdown-title">
-                🔔 Notifiche Operatore
-              </div>
-              <div id="notificationsOperatorSub" class="notifications-dropdown-sub">
-                Avvisi uscite (-7gg, -3gg, -1g e uscita live)
-              </div>
+              <div class="notifications-dropdown-title">🔔 Notifiche</div>
             </div>
             <button type="button" id="clearAllNotificationsBtn" class="notifications-clear-all-btn" title="Cancella tutte le notifiche">
               🗑️ Cancella tutte
             </button>
           </div>
-
-          <div id="notificationsListContainer" class="notifications-list-container">
-            <!-- Popolato dinamicamente da app.js -->
-          </div>
+          <div id="notificationsListContainer" class="notifications-list-container"></div>
         </div>
       </div>
 
@@ -153,1343 +133,455 @@
     <div class="vsnr-header-line"></div>
   </header>
 
-  <!-- ==================== SHELL PRINCIPALE: SIDEBAR QUADRATA A SINISTRA + WORKSPACE ==================== -->
+  <!-- ==================== SHELL PRINCIPALE ==================== -->
   <div class="app-shell">
-    <!-- BARRA LATERALE SINISTRA CON TASTI QUADRATI PIÙ GRANDI -->
     <aside class="vsnr-left-sidebar">
       <nav class="nav-tabs" aria-label="Navigazione Gestionale VNSR">
         <button type="button" class="nav-tab active" data-tab="artists">
           <span class="nav-tab-index">01 / ROSTER</span>
           <span class="nav-tab-icon">🎤</span>
-          <span class="nav-tab-label">Anagrafica<br /><em>Artisti &amp; Collab.</em></span>
+          <span class="nav-tab-label">Anagrafica Artisti</span>
         </button>
 
         <button type="button" class="nav-tab" data-tab="tracks">
           <span class="nav-tab-index">02 / SOUND</span>
           <span class="nav-tab-icon">🎵</span>
-          <span class="nav-tab-label">Catalogo Tracce<br /><em>&amp; Master</em></span>
+          <span class="nav-tab-label">Catalogo Tracce</span>
         </button>
 
         <button type="button" class="nav-tab" data-tab="appointments">
           <span class="nav-tab-index">03 / AGENDA</span>
           <span class="nav-tab-icon">📅</span>
-          <span class="nav-tab-label">Appuntamenti<br /><em>&amp; Apple Cal</em></span>
+          <span class="nav-tab-label">Calendario</span>
         </button>
 
         <button type="button" class="nav-tab" data-tab="activity">
           <span class="nav-tab-index">04 / LOG</span>
           <span class="nav-tab-icon">📋</span>
-          <span class="nav-tab-label">Registro<br /><em>Operatori</em></span>
+          <span class="nav-tab-label">Registro Operatori</span>
         </button>
       </nav>
     </aside>
 
-    <!-- CONTENUTO PRINCIPALE -->
     <main class="main-container">
-      <!-- Hero Banner Ispirato a www.vsnrlabel.it -->
-      <section class="vsnr-hero-strip">
-        <div class="vsnr-hero-left">
-          <p class="vsnr-monument-tag">00 / ECOSISTEMA VNSR</p>
-          <h2 class="vsnr-hero-headline">Tutto questo. <em>In un solo luogo.</em></h2>
-          <p class="vsnr-hero-sub">
-            Una visione, una guida, un orizzonte — gestione sincronizzata in tempo reale di roster, contratti, master e calendario.
-          </p>
-        </div>
-      </section>
-
-      <div class="vsnr-divider-line"></div>
-
-      <!-- Notifiche Controllo a 2 Fattori Contratti (In attesa di scansione firmata - Step 2/2) -->
       <div id="twoFaNotificationsContainer" class="twofa-banner-container"></div>
 
-      <!-- Statistiche Rapide -->
-      <section class="stats-row">
-        <div class="stat-card">
-          <div class="stat-info">
-            <span class="stat-monument">01 / ROSTER</span>
-            <span>Artisti VNSR</span>
-            <strong id="statArtistsCount">0</strong>
-          </div>
-          <div class="stat-icon">🎤</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <span class="stat-monument">02 / SOUND</span>
-            <span>Tracce a Catalogo</span>
-            <strong id="statTracksCount">0</strong>
-          </div>
-          <div class="stat-icon">💿</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <span class="stat-monument">03 / OWNERSHIP</span>
-            <span>Contratti Depositati</span>
-            <strong id="statContractsCount">0</strong>
-          </div>
-          <div class="stat-icon">📄</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <span class="stat-monument">04 / MASTER</span>
-            <span>Master MP3 Caricati</span>
-            <strong id="statAudioCount">0</strong>
-          </div>
-          <div class="stat-icon">🎧</div>
-        </div>
-      </section>
-
-      <!-- ==================== VISTA 1: ANAGRAFICA ARTISTI & COLLABORATORI ==================== -->
+      <!-- VISTA 1: ANAGRAFICA -->
       <section id="view-artists" class="tab-view">
-        <div class="vsnr-section-heading">
-          <span class="vsnr-monument-tag">01 / ROSTER, COLLABORATORI &amp; OWNERSHIP</span>
-          <h3>Anagrafica <em>Artisti &amp; Collaboratori.</em></h3>
-        </div>
         <div class="section-toolbar">
           <div style="display: flex; gap: 10px; align-items: center; flex: 1; flex-wrap: wrap;">
             <div class="search-box" style="max-width: 340px;">
               <span class="search-icon">🔍</span>
-              <input
-                type="text"
-                id="artistSearchInput"
-                placeholder="Cerca artista o collaboratore..."
-              />
-            </div>
-            <div class="anagrafica-type-filter" role="group" aria-label="Filtra per tipologia">
-              <button type="button" class="anagrafica-filter-pill active" data-person-filter="ALL">Tutti</button>
-              <button type="button" class="anagrafica-filter-pill" data-person-filter="Artista">🎤 Artisti</button>
-              <button type="button" class="anagrafica-filter-pill" data-person-filter="Collaboratore">🤝 Collaboratori</button>
+              <input type="text" id="artistSearchInput" placeholder="Cerca artista o collaboratore..." />
             </div>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button type="button" id="exportBackupBtn" class="btn btn-secondary">
-              💾 Esporta Backup
-            </button>
-            <button type="button" id="openAddCollaboratorBtn" class="btn btn-secondary" style="border-color: rgba(209, 69, 254, 0.55); color: #f3c4ff;">
-              🤝 Aggiungi Collaboratore
-            </button>
-            <button type="button" id="openAddArtistBtn" class="btn btn-primary">
-              🎤 Nuovo Artista
-            </button>
+            <button type="button" id="exportBackupBtn" class="btn btn-secondary">💾 Esporta Backup</button>
+            <button type="button" id="openAddCollaboratorBtn" class="btn btn-secondary" style="border-color: rgba(209, 69, 254, 0.55); color: #f3c4ff;">🤝 Aggiungi Collaboratore</button>
+            <button type="button" id="openAddArtistBtn" class="btn btn-primary">🎤 Nuovo Artista</button>
           </div>
         </div>
-
         <div id="artistsContainer" class="artists-grid"></div>
       </section>
 
-      <!-- ==================== VISTA 2: CATALOGO TRACCE ==================== -->
+      <!-- VISTA 2: TRACCE -->
       <section id="view-tracks" class="tab-view" style="display: none;">
-        <div class="vsnr-section-heading">
-          <span class="vsnr-monument-tag">02 / SOUND &amp; PRODUCTION</span>
-          <h3>La produzione <em>è solo l'inizio.</em></h3>
-        </div>
         <div class="section-toolbar">
           <div style="display: flex; gap: 12px; flex: 1; flex-wrap: wrap; align-items: center;">
             <div class="search-box">
               <span class="search-icon">🔍</span>
-              <input
-                type="text"
-                id="trackSearchInput"
-                placeholder="Cerca per titolo canzone, artista, producer, UPC o ISRC..."
-              />
+              <input type="text" id="trackSearchInput" placeholder="Cerca per titolo, artista, UPC o ISRC..." />
             </div>
             <select id="trackArtistFilter" class="form-control" style="min-width: 210px;">
               <option value="ALL">Tutti gli Artisti VNSR</option>
             </select>
           </div>
-
-          <button type="button" id="openAddTrackBtn" class="btn btn-primary">
-            ➕ Aggiungi Nuova Traccia
-          </button>
+          <button type="button" id="openAddTrackBtn" class="btn btn-primary">➕ Nuova Traccia</button>
         </div>
-
         <div id="tracksContainer" class="tracks-grid"></div>
       </section>
 
-      <!-- ==================== VISTA 3: SEZIONE APPUNTAMENTI & CALENDARIO APPLE ==================== -->
+      <!-- VISTA 3: CALENDARIO -->
       <section id="view-appointments" class="tab-view" style="display: none;">
-        <div class="vsnr-section-heading">
-          <span class="vsnr-monument-tag">03 / AGENDA &amp; PLANNING</span>
-          <h3>Appuntamenti <em>&amp; Apple Calendar.</em></h3>
-        </div>
         <div class="section-toolbar">
-          <div>
-            <p style="font-size: 14px; color: var(--text-secondary);">
-              Ricevi appuntamenti da Apple Calendar (iCloud Mail) e crea nuovi eventi in upload diretto dal gestionale.
-            </p>
-          </div>
+          <div><p style="font-size: 14px; color: var(--text-secondary);">Apple Calendar Sync & Eventi.</p></div>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button type="button" id="openAppleAuthBtn" class="btn btn-secondary">
-              🍎 Accesso Mail Apple Calendar
-            </button>
-            <button type="button" id="pullAppleCalendarBtn" class="btn btn-secondary">
-              🔄 Ricevi da Apple Calendar
-            </button>
-            <button type="button" id="openCalendarWindowBtn" class="btn btn-secondary">
-              🪟 Apri Finestra Calendario
-            </button>
-            <button type="button" id="openNewAppointmentBtn" class="btn btn-primary">
-              ➕ Nuovo Appuntamento (Upload)
-            </button>
+            <button type="button" id="openAppleAuthBtn" class="btn btn-secondary">🍎 Accesso Mail Apple</button>
+            <button type="button" id="pullAppleCalendarBtn" class="btn btn-secondary">🔄 Ricevi da Apple</button>
+            <button type="button" id="openCalendarWindowBtn" class="btn btn-secondary">🪟 Apri Finestra Calendario</button>
+            <button type="button" id="openNewAppointmentBtn" class="btn btn-primary">➕ Nuovo Appuntamento</button>
           </div>
         </div>
 
-        <!-- Layout Calendario + Agenda -->
         <div class="calendar-layout">
           <div class="calendar-board">
             <div class="calendar-board-header">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(-1)">◀ Mese Prec.</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(-1)">◀ Prec.</button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="resetCalendarToToday()">Oggi</button>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(1)">Mese Succ. ▶</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(1)">Succ. ▶</button>
               </div>
               <div id="inlineCalendarMonthTitle" class="calendar-month-title">Ottobre 2026</div>
               <div id="appleConnectionBadge" class="badge badge-pending">🍎 Apple Calendar: Non connesso</div>
             </div>
-
-            <div class="calendar-weekdays">
-              <div>Lun</div>
-              <div>Mar</div>
-              <div>Mer</div>
-              <div>Gio</div>
-              <div>Ven</div>
-              <div>Sab</div>
-              <div>Dom</div>
-            </div>
+            <div class="calendar-weekdays"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
             <div id="inlineCalendarDaysGrid" class="calendar-days-grid"></div>
           </div>
 
           <aside class="calendar-sidebar">
             <div class="apple-sync-card">
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                <strong style="font-size: 13px; color: var(--text-primary);">🍎 Sincronizzazione Apple Calendar</strong>
+                <strong style="font-size: 13px;">🍎 Sincronizzazione Apple Calendar</strong>
                 <span id="sidebarAppleEmail" style="font-size: 11.5px; color: var(--accent-primary);">Non collegato</span>
               </div>
-              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 10px;">
-                Collega la tua mail Apple/iCloud per ricevere gli impegni e inviare in upload i nuovi appuntamenti creati da VNSR.
-              </p>
               <div style="display: flex; gap: 8px;">
-                <button type="button" class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openAppleAuthModal()">
-                  🔑 Configura Mail Apple
-                </button>
-                <label class="btn btn-secondary btn-sm" style="cursor: pointer;" title="Importa un file .ics esportato da Apple Calendar">
-                  📥 .ICS
-                  <input type="file" id="importIcsFileInput" accept=".ics,text/calendar" style="display: none;" />
-                </label>
+                <button type="button" class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openAppleAuthModal()">🔑 Configura Mail Apple</button>
+                <label class="btn btn-secondary btn-sm" style="cursor: pointer;">📥 .ICS<input type="file" id="importIcsFileInput" accept=".ics,text/calendar" style="display: none;" /></label>
               </div>
             </div>
-
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <strong id="selectedDayAgendaTitle" style="font-size: 14px;">Appuntamenti del Giorno</strong>
-              <button type="button" class="btn btn-primary btn-sm" onclick="openNewAppointmentModal(selectedCalendarDate)">
-                ➕ Crea Qui
-              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="openNewAppointmentModal(selectedCalendarDate)">➕ Crea Qui</button>
             </div>
             <div id="selectedDayAppointmentsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 440px; overflow-y: auto;"></div>
           </aside>
         </div>
       </section>
 
-      <!-- ==================== VISTA 4: REGISTRO ATTIVITÀ OPERATORI ==================== -->
+      <!-- VISTA 4: REGISTRO -->
       <section id="view-activity" class="tab-view" style="display: none;">
-        <div class="vsnr-section-heading">
-          <span class="vsnr-monument-tag">04 / OPERATOR LOG</span>
-          <h3>Storico Operazioni <em>in Tempo Reale.</em></h3>
-        </div>
-        <div class="section-toolbar">
-          <div>
-            <p style="font-size: 14px; color: var(--text-secondary);">
-              Tracciamento condiviso in tempo reale di inserimenti e modifiche da tutti i dispositivi.
-            </p>
-          </div>
-        </div>
         <div id="activityContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </section>
     </main>
   </div>
 
-  <!-- ==================== PLAYER AUDIO FISSO IN BASSO ==================== -->
+  <!-- ==================== PLAYER AUDIO ==================== -->
   <div id="globalPlayer" class="global-player">
     <div class="player-track-info">
       <img id="playerCover" class="player-cover" src="logo-vnsr.png" alt="Cover" />
       <div>
         <div id="playerTitle" style="font-weight: 800; font-size: 15px;">Titolo Traccia</div>
-        <div class="player-credits-mini">
-          <span id="playerArtist" class="mini-artist">Artista</span>
-          <span>•</span>
-          <span id="playerProducer" class="mini-prod">Prod. Producer</span>
-        </div>
+        <div class="player-credits-mini"><span id="playerArtist" class="mini-artist">Artista</span><span>•</span><span id="playerProducer" class="mini-prod">Prod. Producer</span></div>
       </div>
     </div>
-    <div class="player-controls">
-      <audio id="globalAudioElement" controls preload="metadata"></audio>
-    </div>
-    <div>
-      <button type="button" id="closePlayerBtn" class="btn btn-secondary btn-sm">Chiudi ✕</button>
-    </div>
+    <div class="player-controls"><audio id="globalAudioElement" controls preload="metadata"></audio></div>
+    <div><button type="button" id="closePlayerBtn" class="btn btn-secondary btn-sm">Chiudi ✕</button></div>
   </div>
 
-  <!-- ==================== MODALE SINCRONIZZAZIONE MULTI-DISPOSITIVO ==================== -->
+  <!-- ==================== MODALI ==================== -->
   <div id="syncModal" class="modal-backdrop">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h2>☁️ Sincronizzazione Multi-Dispositivo VNSR</h2>
-        <button type="button" class="close-btn" data-close="syncModal">✕</button>
-      </div>
-
+      <div class="modal-header"><h2>☁️ Sincronizzazione Multi-Dispositivo</h2><button type="button" class="close-btn" data-close="syncModal">✕</button></div>
       <div style="display: flex; flex-direction: column; gap: 18px;">
-        <!-- Box 1: Rete Locale / Server VNSR -->
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 14px; padding: 16px;">
-          <div style="font-size: 12.5px; font-weight: 800; color: #34d399; text-transform: uppercase; margin-bottom: 6px;">
-            🟢 1. Accesso Diretto da Altri Dispositivi (Stessa Rete / Server Attivo)
-          </div>
-          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
-            Qualsiasi computer, smartphone o tablet collegato al server può aprire questo indirizzo nel browser. La sincronizzazione avviene <strong>in tempo reale istantaneo</strong> (upload immediato ad ogni salvataggio e ricezione continua istantanea):
-          </p>
           <div style="display: flex; gap: 8px; align-items: center;">
-            <input
-              type="text"
-              id="lanSyncUrlDisplay"
-              class="form-control"
-              style="flex: 1; font-family: monospace; font-weight: 700; color: var(--accent-cyan);"
-              readonly
-              value="http://127.0.0.1:8080"
-            />
-            <button type="button" id="copyLanUrlBtn" class="btn btn-secondary btn-sm">
-              📋 Copia Link
-            </button>
+            <input type="text" id="lanSyncUrlDisplay" class="form-control" style="flex: 1;" readonly value="http://127.0.0.1:8080" />
+            <button type="button" id="copyLanUrlBtn" class="btn btn-secondary btn-sm">📋 Copia Link</button>
           </div>
         </div>
-
-        <!-- Box 2: Cloud Sync Ovunque (Anche fuori sede / reti diverse) -->
         <div style="background: rgba(124, 92, 255, 0.08); border: 1px solid var(--border-strong); border-radius: 14px; padding: 16px;">
-          <div style="font-size: 12.5px; font-weight: 800; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 6px;">
-            🌐 2. Cloud Sync Remoto (Sincronizzazione tra Dispositivi a Distanza)
-          </div>
-          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
-            Se usate il gestionale da luoghi diversi, puoi inserire l'URL del server remoto VNSR (es. tunnel Cloudflare/ngrok o server aziendale) oppure l'URL di un database Realtime Cloud (es. Firebase Realtime DB <code>https://tuo-db.firebaseio.com</code>):
-          </p>
           <div class="form-group" style="margin-bottom: 10px;">
-            <label for="remoteSyncEndpointInput">URL Server / Cloud Database Condiviso (Firebase Realtime DB Preconfigurato)</label>
-            <input
-              type="url"
-              id="remoteSyncEndpointInput"
-              class="form-control"
-              value="https://vsnr-management-default-rtdb.europe-west1.firebasedatabase.app"
-              placeholder="https://vsnr-management-default-rtdb.europe-west1.firebasedatabase.app"
-            />
+            <label for="remoteSyncEndpointInput">URL Cloud Database Condiviso</label>
+            <input type="url" id="remoteSyncEndpointInput" class="form-control" />
           </div>
           <div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;">
-            <button type="button" id="testFirebaseBtn" class="btn btn-secondary btn-sm" style="border-color: var(--accent-cyan); color: var(--accent-cyan);">
-              🧪 Test Lettura / Scrittura Firebase
-            </button>
-            <button type="button" id="forceSyncNowBtn" class="btn btn-secondary btn-sm">
-              🔄 Forza Sincronizzazione Ora
-            </button>
-            <button type="button" id="saveSyncConfigBtn" class="btn btn-primary btn-sm">
-              💾 Salva Impostazioni Cloud
-            </button>
+            <button type="button" id="testFirebaseBtn" class="btn btn-secondary btn-sm">🧪 Test</button>
+            <button type="button" id="forceSyncNowBtn" class="btn btn-secondary btn-sm">🔄 Forza Sync</button>
+            <button type="button" id="saveSyncConfigBtn" class="btn btn-primary btn-sm">💾 Salva Cloud</button>
           </div>
-          <pre
-            id="firebaseTestOutput"
-            style="display: none; margin-top: 12px; background: #080a10; border: 1px solid var(--border-strong); border-radius: 10px; padding: 12px; font-size: 12px; color: #34d399; overflow-x: auto; font-family: monospace; white-space: pre-wrap;"
-          ></pre>
+          <pre id="firebaseTestOutput" style="display: none;"></pre>
         </div>
-
-        <!-- Box 3: Importa / Ripristina Backup JSON -->
-        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-          <span style="font-size: 13px; color: var(--text-secondary);">
-            Vuoi importare un file di backup <code>.json</code> salvato da un altro dispositivo?
-          </span>
-          <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
-            📂 Importa Backup JSON
-            <input type="file" id="importBackupInput" accept=".json" style="display: none;" />
-          </label>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <span style="font-size: 13px; color: var(--text-secondary);">Importa un file <code>.json</code>?</span>
+          <label class="btn btn-secondary btn-sm" style="cursor: pointer;">📂 Importa Backup<input type="file" id="importBackupInput" accept=".json" style="display: none;" /></label>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODALE AGGIUNGI / MODIFICA ANAGRAFICA (ARTISTA O COLLABORATORE) ==================== -->
   <div id="artistModal" class="modal-backdrop">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 id="artistModalTitle">Nuova Scheda in Anagrafica</h2>
-        <button type="button" class="close-btn" data-close="artistModal">✕</button>
-      </div>
+      <div class="modal-header"><h2 id="artistModalTitle">Nuova Scheda in Anagrafica</h2><button type="button" class="close-btn" data-close="artistModal">✕</button></div>
       <form id="artistForm">
         <input type="hidden" id="artistIdInput" />
         <div class="form-grid">
-          <!-- SCELTA RUOLO IN ANAGRAFICA: ARTISTA O COLLABORATORE -->
           <div class="form-group full">
-            <label>1. Ruolo in Anagrafica: È un Artista o un Collaboratore? *</label>
             <input type="hidden" id="artistPersonTypeInput" value="Artista" />
-            <div class="person-type-selector" role="radiogroup" aria-label="Scelta Artista o Collaboratore">
-              <button type="button" id="personTypeArtistaBtn" class="person-type-option active" data-ptype="Artista">
-                <span class="person-type-icon">🎤</span>
-                <div>
-                  <strong>Artista</strong>
-                  <small>Artista principale o ospite per release, featuring e contratti</small>
-                </div>
-              </button>
-              <button type="button" id="personTypeCollabBtn" class="person-type-option" data-ptype="Collaboratore">
-                <span class="person-type-icon">🤝</span>
-                <div>
-                  <strong>Collaboratore</strong>
-                  <small>Producer, autore, feat., mix/master o co-titolare diritti</small>
-                </div>
-              </button>
+            <div class="person-type-selector" role="radiogroup">
+              <button type="button" id="personTypeArtistaBtn" class="person-type-option active" data-ptype="Artista"><span class="person-type-icon">🎤</span><div><strong>Artista</strong></div></button>
+              <button type="button" id="personTypeCollabBtn" class="person-type-option" data-ptype="Collaboratore"><span class="person-type-icon">🤝</span><div><strong>Collaboratore</strong></div></button>
             </div>
           </div>
 
-          <!-- IDENTIFICATIVO ESCLUSIVO: NOME D'ARTE OPPURE NOME E COGNOME (MAI ENTRAMBI) -->
           <div class="form-group full anagrafica-exclusive-id-box">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
-              <div>
-                <label style="margin-bottom: 2px; color: var(--accent-gold);">
-                  2. Identificativo: inserisci Nome d'Arte <u>OPPURE</u> Nome e Cognome *
-                </label>
-                <div style="font-size: 11.5px; color: var(--text-secondary);">
-                  Viene preso in considerazione il campo compilato. Non è possibile compilare contemporaneamente Nome/Cognome e Nome d'Arte.
-                </div>
-              </div>
-              <div class="name-mode-toggle" role="group" aria-label="Modalità inserimento nome">
-                <button type="button" id="nameModeStageBtn" class="name-mode-btn active" data-nmode="stage">
-                  ✨ Usa Nome d'Arte
-                </button>
-                <button type="button" id="nameModeLegalBtn" class="name-mode-btn" data-nmode="legal">
-                  🪪 Usa Nome e Cognome
-                </button>
-              </div>
+            <label style="color: var(--accent-gold);">Identificativo: Nome d'Arte OPPURE Nome e Cognome *</label>
+            <div class="name-mode-toggle" style="margin-bottom: 10px;">
+              <button type="button" id="nameModeStageBtn" class="name-mode-btn active" data-nmode="stage">✨ Nome d'Arte</button>
+              <button type="button" id="nameModeLegalBtn" class="name-mode-btn" data-nmode="legal">🪪 Nome e Cognome</button>
             </div>
-
             <div class="form-grid" style="gap: 10px;">
               <div id="stageNameFieldWrap" class="form-group full exclusive-field-card active-mode">
-                <label for="artistStageName">Nome d'Arte (Stage Name)</label>
-                <input
-                  type="text"
-                  id="artistStageName"
-                  class="form-control"
-                  placeholder="Es. Lil Nova / Blacklord..."
-                  autocomplete="off"
-                />
+                <input type="text" id="artistStageName" class="form-control" placeholder="Stage Name" autocomplete="off" />
               </div>
-
               <div id="legalNameFieldsWrap" class="form-group full exclusive-field-card disabled-mode" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label for="artistFirstName">Nome</label>
-                  <input
-                    type="text"
-                    id="artistFirstName"
-                    class="form-control"
-                    placeholder="Es. Marco"
-                    autocomplete="off"
-                    disabled
-                  />
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label for="artistLastName">Cognome</label>
-                  <input
-                    type="text"
-                    id="artistLastName"
-                    class="form-control"
-                    placeholder="Es. Rossi"
-                    autocomplete="off"
-                    disabled
-                  />
-                </div>
+                <input type="text" id="artistFirstName" class="form-control" placeholder="Nome" disabled />
+                <input type="text" id="artistLastName" class="form-control" placeholder="Cognome" disabled />
               </div>
             </div>
-            <div id="artistIdentityError" class="pin-error" style="min-height: 18px; margin-top: 6px; text-align: left; font-size: 12px;"></div>
+            <div id="artistIdentityError" class="pin-error"></div>
           </div>
 
-          <div class="form-group">
-            <label for="artistContractStatus">Stato del Contratto / Collaborazione *</label>
-            <select id="artistContractStatus" class="form-control" required>
-              <option value="Firmato e Attivo">✅ Firmato e Attivo</option>
-              <option value="In Negoziazione / Firma">⏳ In Negoziazione / Firma</option>
-              <option value="Contratto per Singola Release">💿 Contratto per Singola Release / Feat.</option>
-              <option value="Collaboratore Esterno / Diritti">🤝 Collaboratore Accreditato (Feat. / Diritti)</option>
-              <option value="Scaduto / Risolto">📁 Scaduto / Risolto</option>
-            </select>
-          </div>
+          <div class="form-group"><label>Stato Contratto *</label><select id="artistContractStatus" class="form-control"><option value="Firmato e Attivo">✅ Firmato e Attivo</option><option value="In Negoziazione / Firma">⏳ In Negoziazione</option><option value="Contratto per Singola Release">💿 Singola Release</option><option value="Collaboratore Esterno / Diritti">🤝 Collaboratore</option><option value="Scaduto / Risolto">📁 Scaduto</option></select></div>
+          <div class="form-group"><label>Data Firma</label><input type="date" id="artistContractDate" class="form-control" /></div>
+          <div class="form-group full"><label>Dettagli</label><textarea id="artistContractDetails" class="form-control" rows="2"></textarea></div>
 
-          <div class="form-group">
-            <label for="artistContractDate">Data Firma / Inizio Collaborazione</label>
-            <input type="date" id="artistContractDate" class="form-control" />
-          </div>
-
-          <div class="form-group full">
-            <label for="artistContractDetails">Dettagli / Accordi per Featuring, Produzione o Diritti (Es. Royalty %, Ruolo, Split)</label>
-            <textarea
-              id="artistContractDetails"
-              class="form-control"
-              rows="2"
-              placeholder="Es. Co-Produzione / Featuring / Ripartizione Diritti Master 50/50..."
-            ></textarea>
-          </div>
-
-          <!-- CONTROLLO A 2 FATTORI CONTRATTO: STEP 1 (GENERA PDF COMPILATO) + STEP 2 (UPLOAD SCANSIONE FIRMATA) -->
-          <div class="form-group full" style="background: rgba(124, 92, 255, 0.07); border: 1.5px solid var(--border-strong); border-radius: 14px; padding: 14px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
-              <div>
-                <div style="font-size: 12.5px; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;">
-                  🔐 Procedura Contratto / Liberatoria Diritti a Due Fattori (2FA)
-                </div>
-                <div style="font-size: 11.5px; color: var(--text-secondary); margin-top: 2px;">
-                  Passaggio 1: Compila e genera il PDF pronto per la stampa • Passaggio 2: Carica il PDF scannerizzato con la firma
-                </div>
-              </div>
-              <button type="button" id="openContractBuilderBtn" class="btn btn-primary btn-sm">
-                📝 1. Compila & Genera Contratto PDF
-              </button>
+          <div class="form-group full" style="background: rgba(124, 92, 255, 0.07); padding: 14px; border-radius: 14px;">
+            <div style="display: flex; justify-content: space-between;"><label>Gestione Contratto / Liberatoria</label><button type="button" id="openContractBuilderBtn" class="btn btn-primary btn-sm">📝 Genera Contratto PDF</button></div>
+            <div class="twofa-stepper" style="margin: 12px 0;">
+              <div id="modalStep1Box" class="twofa-step"><span>1️⃣</span><div><strong>Step 1: PDF</strong><div id="modalStep1Status">Non generato</div></div></div>
+              <div id="modalStep2Box" class="twofa-step"><span>2️⃣</span><div><strong>Step 2: Scansione</strong><div id="modalStep2Status">In attesa</div></div></div>
             </div>
-
-            <div class="twofa-stepper" style="margin-bottom: 12px;">
-              <div id="modalStep1Box" class="twofa-step">
-                <span>1️⃣</span>
-                <div>
-                  <strong>Fattore 1: PDF Precompilato</strong>
-                  <div id="modalStep1Status" style="font-size: 11px; opacity: 0.85;">Non ancora generato</div>
-                </div>
-              </div>
-              <div id="modalStep2Box" class="twofa-step">
-                <span>2️⃣</span>
-                <div>
-                  <strong>Fattore 2: Scansione Firmata</strong>
-                  <div id="modalStep2Status" style="font-size: 11px; opacity: 0.85;">In attesa del Passaggio 1</div>
-                </div>
-              </div>
-            </div>
-
-            <label style="margin-bottom: 6px; display: block;">
-              Passaggio 2/2 — Upload Contratto Scannerizzato con Firma (PDF o Immagine)
-            </label>
-            <label class="file-dropzone" for="artistContractFile">
-              <input type="file" id="artistContractFile" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
-              <div id="artistContractFileLabel" style="font-size: 13px; color: var(--text-secondary);">
-                📄 <strong>Clicca per caricare il Contratto Scannerizzato con Firma</strong> (Completa Passaggio 2/2)
-              </div>
-            </label>
+            <label class="file-dropzone" for="artistContractFile"><input type="file" id="artistContractFile" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" /><div id="artistContractFileLabel">Upload Contratto Firmato</div></label>
           </div>
         </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
-          <button type="button" class="btn btn-secondary" data-close="artistModal">Annulla</button>
-          <button type="submit" id="artistFormSubmitBtn" class="btn btn-primary">💾 Salva in Anagrafica</button>
-        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;"><button type="button" class="btn btn-secondary" data-close="artistModal">Annulla</button><button type="submit" id="artistFormSubmitBtn" class="btn btn-primary">💾 Salva</button></div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== MODALE COMPILAZIONE GUIDATA CONTRATTO PDF (4 PAGINE) ==================== -->
   <div id="contractBuilderModal" class="modal-backdrop" style="z-index: 2500;">
     <div class="modal-dialog contract-builder-dialog">
-      <div class="modal-header">
-        <div>
-          <h2>📝 Compilazione Contratto Fonografico Ufficiale VNSR</h2>
-          <p style="font-size: 12.5px; color: var(--text-secondary); margin-top: 3px;">
-            Accordo di Co-Produzione, Co-Proprietà Master e Ripartizione Royalties (Legge 22 Aprile 1941, n. 633)
-          </p>
-        </div>
-        <button type="button" class="close-btn" data-close="contractBuilderModal">✕</button>
-      </div>
-
+      <div class="modal-header"><h2>📝 Compilazione Contratto PDF</h2><button type="button" class="close-btn" data-close="contractBuilderModal">✕</button></div>
       <form id="contractBuilderForm">
-        <!-- PARTE 1: L'ETICHETTA DISCOGRAFICA -->
         <div class="contract-section-card">
-          <div class="contract-section-title">
-            <span>🏢 PARTE 1: L'ETICHETTA DISCOGRAFICA ("ETICHETTA") — Pagina 1</span>
-            <span style="font-size: 11px; color: var(--text-muted);">Pre-salvati per VNSR</span>
-          </div>
           <div class="form-grid-3">
-            <div class="form-group">
-              <label for="cbLabelName">Ragione Sociale *</label>
-              <input type="text" id="cbLabelName" class="form-control" value="VNSR" required />
-            </div>
-            <div class="form-group">
-              <label for="cbLabelVat">P.IVA / C.F. *</label>
-              <input type="text" id="cbLabelVat" class="form-control" placeholder="Es. 12345678901" required />
-            </div>
-            <div class="form-group">
-              <label for="cbLabelRep">Legale Rappresentante *</label>
-              <input type="text" id="cbLabelRep" class="form-control" placeholder="Nome e Cognome" required />
-            </div>
-            <div class="form-group">
-              <label for="cbLabelCity">Sede Legale (Città/Cap) *</label>
-              <input type="text" id="cbLabelCity" class="form-control" placeholder="Es. Roma - 00100" required />
-            </div>
-            <div class="form-group">
-              <label for="cbLabelAddress">Indirizzo Completo *</label>
-              <input type="text" id="cbLabelAddress" class="form-control" placeholder="Es. Via Nazionale 10" required />
-            </div>
-            <div class="form-group">
-              <label for="cbLabelEmail">E-mail / PEC *</label>
-              <input type="text" id="cbLabelEmail" class="form-control" placeholder="Es. info@vnsr.it" required />
-            </div>
+            <div class="form-group"><label>Ragione Sociale *</label><input type="text" id="cbLabelName" class="form-control" value="VNSR" required /></div>
+            <div class="form-group"><label>P.IVA / C.F. *</label><input type="text" id="cbLabelVat" class="form-control" required /></div>
+            <div class="form-group"><label>Legale Rappresentante *</label><input type="text" id="cbLabelRep" class="form-control" required /></div>
+            <div class="form-group"><label>Sede Legale (Città/Cap) *</label><input type="text" id="cbLabelCity" class="form-control" required /></div>
+            <div class="form-group"><label>Indirizzo *</label><input type="text" id="cbLabelAddress" class="form-control" required /></div>
+            <div class="form-group"><label>E-mail / PEC *</label><input type="text" id="cbLabelEmail" class="form-control" required /></div>
           </div>
         </div>
-
-        <!-- PARTE 2: L'ARTISTA O COLLABORATORE (CON PRESELEZIONE DA ANAGRAFICA) -->
         <div class="contract-section-card">
-          <div class="contract-section-title">
-            <span>🎤🤝 PARTE 2: L'ARTISTA / COLLABORATORE TITOLARE DIRITTI — Pagina 1</span>
-            <span style="font-size: 11px; color: var(--accent-gold);">Preselezionabile da Anagrafica</span>
-          </div>
-
-          <!-- BARRA DI PRESELEZIONE RAPIDA DA ANAGRAFICA (ARTISTI & COLLABORATORI) -->
-          <div class="preselect-anagrafica-box" style="margin-bottom: 12px;">
-            <div class="preselect-anagrafica-label">
-              <span>⚡ Preseleziona Soggetto da Anagrafica (Artisti & Collaboratori per Diritti / Contratti):</span>
-            </div>
-            <div id="cbPreselectAnagraficaPills" class="preselect-pills-bar"></div>
-          </div>
-
+          <div id="cbPreselectAnagraficaPills" class="preselect-pills-bar" style="margin-bottom: 12px;"></div>
           <div class="form-grid-3">
-            <div class="form-group">
-              <label for="cbArtistFirstName">Nome (se registrato per Nome/Cognome)</label>
-              <input type="text" id="cbArtistFirstName" class="form-control" placeholder="Nome legale" />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistLastName">Cognome (se registrato per Nome/Cognome)</label>
-              <input type="text" id="cbArtistLastName" class="form-control" placeholder="Cognome legale" />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistStageName">Nome d'arte (se registrato per Nome d'Arte)</label>
-              <input type="text" id="cbArtistStageName" class="form-control" placeholder="Pseudonimo / Nome d'arte" />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistBirthPlace">Nato/a a *</label>
-              <input type="text" id="cbArtistBirthPlace" class="form-control" placeholder="Es. Roma (RM)" required />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistBirthDate">Il (Data di Nascita) *</label>
-              <input type="text" id="cbArtistBirthDate" class="form-control" placeholder="GG/MM/AAAA" required />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistCf">Codice Fiscale *</label>
-              <input type="text" id="cbArtistCf" class="form-control" placeholder="16 caratteri" style="text-transform: uppercase;" required />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistCity">Residenza (Città/Cap) *</label>
-              <input type="text" id="cbArtistCity" class="form-control" placeholder="Es. Milano - 20100" required />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistAddress">Indirizzo Completo *</label>
-              <input type="text" id="cbArtistAddress" class="form-control" placeholder="Es. Via Verdi 24" required />
-            </div>
-            <div class="form-group">
-              <label for="cbArtistContact">E-mail / Tel. *</label>
-              <input type="text" id="cbArtistContact" class="form-control" placeholder="email@esempio.it / +39..." required />
-            </div>
-            <div class="form-group full">
-              <label for="cbArtistDocId">Doc. Identità N. *</label>
-              <input type="text" id="cbArtistDocId" class="form-control" placeholder="Es. CA12345AA (Carta d'Identità / Passaporto)" required />
-            </div>
+            <div class="form-group"><label>Nome</label><input type="text" id="cbArtistFirstName" class="form-control" /></div>
+            <div class="form-group"><label>Cognome</label><input type="text" id="cbArtistLastName" class="form-control" /></div>
+            <div class="form-group"><label>Nome d'arte</label><input type="text" id="cbArtistStageName" class="form-control" /></div>
+            <div class="form-group"><label>Nato/a a *</label><input type="text" id="cbArtistBirthPlace" class="form-control" required /></div>
+            <div class="form-group"><label>Data di Nascita *</label><input type="text" id="cbArtistBirthDate" class="form-control" required /></div>
+            <div class="form-group"><label>Codice Fiscale *</label><input type="text" id="cbArtistCf" class="form-control" required /></div>
+            <div class="form-group"><label>Residenza *</label><input type="text" id="cbArtistCity" class="form-control" required /></div>
+            <div class="form-group"><label>Indirizzo *</label><input type="text" id="cbArtistAddress" class="form-control" required /></div>
+            <div class="form-group"><label>E-mail / Tel. *</label><input type="text" id="cbArtistContact" class="form-control" required /></div>
+            <div class="form-group full"><label>Doc. Identità N. *</label><input type="text" id="cbArtistDocId" class="form-control" required /></div>
           </div>
         </div>
-
-        <!-- DATI IDENTIFICATIVI DELL'OPERA / MASTER FONOGRAFICO -->
         <div class="contract-section-card">
-          <div class="contract-section-title">
-            <span>💿 DATI IDENTIFICATIVI DELL'OPERA / MASTER FONOGRAFICO — Pagina 1</span>
-          </div>
           <div class="form-grid">
-            <div class="form-group">
-              <label for="cbTrackTitle">Titolo del Brano *</label>
-              <input type="text" id="cbTrackTitle" class="form-control" placeholder="Titolo dell'opera" required />
-            </div>
-            <div class="form-group">
-              <label for="cbTrackIsrc">Codice ISRC *</label>
-              <input type="text" id="cbTrackIsrc" class="form-control" placeholder="Es. IT-VNS-26-00001" required />
-            </div>
-            <div class="form-group">
-              <label for="cbTrackVersion">Versione *</label>
-              <select id="cbTrackVersion" class="form-control" required>
-                <option value="Original">[X] Original</option>
-                <option value="Remix">[X] Remix</option>
-                <option value="Acoustic">[X] Acoustic</option>
-                <option value="Extended">[X] Extended</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="cbDeliveryDate">Data Consegna (GG/MM/AAAA) *</label>
-              <input type="text" id="cbDeliveryDate" class="form-control" placeholder="Es. 29/10/2026" required />
-            </div>
+            <div class="form-group"><label>Titolo del Brano *</label><input type="text" id="cbTrackTitle" class="form-control" required /></div>
+            <div class="form-group"><label>Codice ISRC *</label><input type="text" id="cbTrackIsrc" class="form-control" required /></div>
+            <div class="form-group"><label>Versione *</label><select id="cbTrackVersion" class="form-control"><option value="Original">Original</option><option value="Remix">Remix</option><option value="Acoustic">Acoustic</option><option value="Extended">Extended</option></select></div>
+            <div class="form-group"><label>Data Consegna *</label><input type="text" id="cbDeliveryDate" class="form-control" required /></div>
           </div>
         </div>
-
-        <!-- ART. 4 & ART. 5: ROYALTIES, SPESE RECUPERABILI E RENDICONTAZIONE (PAGINA 2) -->
         <div class="contract-section-card">
-          <div class="contract-section-title">
-            <span>📊 ART. 4 & ART. 5: RIPARTIZIONE ROYALTIES, SPESE E RENDICONTO — Pagina 2</span>
-          </div>
           <div class="form-grid-3">
-            <div class="form-group">
-              <label>Streaming Digitale (% Artista / % Etichetta)</label>
-              <div style="display: flex; gap: 6px;">
-                <input type="number" id="cbRoyaltyStreamArtist" class="form-control" value="50" min="0" max="100" required title="Quota Artista %" />
-                <input type="number" id="cbRoyaltyStreamLabel" class="form-control" value="50" min="0" max="100" required title="Quota Etichetta %" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Supporti Fisici (% Artista / % Etichetta)</label>
-              <div style="display: flex; gap: 6px;">
-                <input type="number" id="cbRoyaltyPhysArtist" class="form-control" value="50" min="0" max="100" required title="Quota Artista %" />
-                <input type="number" id="cbRoyaltyPhysLabel" class="form-control" value="50" min="0" max="100" required title="Quota Etichetta %" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Video / Social (% Artista / % Etichetta)</label>
-              <div style="display: flex; gap: 6px;">
-                <input type="number" id="cbRoyaltySocialArtist" class="form-control" value="50" min="0" max="100" required title="Quota Artista %" />
-                <input type="number" id="cbRoyaltySocialLabel" class="form-control" value="50" min="0" max="100" required title="Quota Etichetta %" />
-              </div>
-            </div>
-            <div class="form-group" style="grid-column: span 2;">
-              <label for="cbRecoupableCosts">Art. 4.2 — Eventuali Spese Recuperabili Convenute (se nessuna, indicare "NESSUNA") *</label>
-              <input type="text" id="cbRecoupableCosts" class="form-control" value="NESSUNA" required />
-            </div>
-            <div class="form-group">
-              <label for="cbStatementPeriod">Art. 5.1 — Periodicità di Rendiconto *</label>
-              <select id="cbStatementPeriod" class="form-control" required>
-                <option value="Semestrale">Semestrale (30 Giugno e 31 Dicembre)</option>
-                <option value="Trimestrale">Trimestrale (Marzo, Giugno, Settembre, Dicembre)</option>
-              </select>
-            </div>
+            <div class="form-group"><label>Streaming (% Artista/Etichetta)</label><div style="display:flex;gap:6px;"><input type="number" id="cbRoyaltyStreamArtist" class="form-control" value="50" required /><input type="number" id="cbRoyaltyStreamLabel" class="form-control" value="50" required /></div></div>
+            <div class="form-group"><label>Fisico (% Artista/Etichetta)</label><div style="display:flex;gap:6px;"><input type="number" id="cbRoyaltyPhysArtist" class="form-control" value="50" required /><input type="number" id="cbRoyaltyPhysLabel" class="form-control" value="50" required /></div></div>
+            <div class="form-group"><label>Video (% Artista/Etichetta)</label><div style="display:flex;gap:6px;"><input type="number" id="cbRoyaltySocialArtist" class="form-control" value="50" required /><input type="number" id="cbRoyaltySocialLabel" class="form-control" value="50" required /></div></div>
+            <div class="form-group" style="grid-column: span 2;"><label>Spese Recuperabili *</label><input type="text" id="cbRecoupableCosts" class="form-control" value="NESSUNA" required /></div>
+            <div class="form-group"><label>Rendiconto *</label><select id="cbStatementPeriod" class="form-control"><option value="Semestrale">Semestrale</option><option value="Trimestrale">Trimestrale</option></select></div>
           </div>
         </div>
-
-        <!-- PAGINA 3 & PAGINA 4: IBAN, SAMPLES, FORO ESCLUSIVO, LUOGO E DATA FIRMA -->
         <div class="contract-section-card">
-          <div class="contract-section-title">
-            <span>✒️ PAGINA 3 & PAGINA 4: IBAN, LIBERATORIA SAMPLES, FORO E SOTTOSCRIZIONE</span>
-          </div>
           <div class="form-grid">
-            <div class="form-group">
-              <label for="cbArtistIban">Coordinate Bancarie IBAN Artista per pagamenti (Pag. 3) *</label>
-              <input type="text" id="cbArtistIban" class="form-control" placeholder="IT00 X000 0000 0000 0000 0000 000" required />
-            </div>
-            <div class="form-group">
-              <label for="cbSamplesDeclaration">Art. 7.2 — Dichiarazione Collaboratori Diritti / Samples / Co-Produttori (Pag. 3) *</label>
-              <input type="text" id="cbSamplesDeclaration" class="form-control" value="NESSUN CAMPIONE DI TERZI UTILIZZATO" list="anagraficaAllNamesList" required />
-              <div class="preselect-anagrafica-box" style="margin-top: 6px;">
-                <div class="preselect-anagrafica-label">
-                  <span>🤝 Clicca per inserire Collaboratori / Artisti da Anagrafica nei Diritti (Art. 7.2):</span>
-                </div>
-                <div id="cbRightsCollaboratorsPills" class="preselect-pills-bar"></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="cbCourtCity">Art. 10 — Foro Esclusivo Competente (Pag. 3) *</label>
-              <input type="text" id="cbCourtCity" class="form-control" value="Roma" placeholder="Es. Roma / Milano" required />
-            </div>
-            <div class="form-group">
-              <label>Luogo e Data di Sottoscrizione (Pag. 4) *</label>
-              <div style="display: flex; gap: 8px;">
-                <input type="text" id="cbSignPlace" class="form-control" value="Roma" placeholder="Luogo" required />
-                <input type="text" id="cbSignDate" class="form-control" placeholder="GG/MM/AAAA" required />
-              </div>
-            </div>
+            <div class="form-group"><label>IBAN Artista *</label><input type="text" id="cbArtistIban" class="form-control" required /></div>
+            <div class="form-group"><label>Collaboratori/Samples *</label><input type="text" id="cbSamplesDeclaration" class="form-control" value="NESSUN CAMPIONE DI TERZI UTILIZZATO" required /><div id="cbRightsCollaboratorsPills" class="preselect-pills-bar" style="margin-top:6px;"></div></div>
+            <div class="form-group"><label>Foro Competente *</label><input type="text" id="cbCourtCity" class="form-control" value="Roma" required /></div>
+            <div class="form-group"><label>Luogo e Data *</label><div style="display:flex;gap:8px;"><input type="text" id="cbSignPlace" class="form-control" value="Roma" required /><input type="text" id="cbSignDate" class="form-control" required /></div></div>
           </div>
         </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
-          <span style="font-size: 12.5px; color: var(--accent-gold);">
-            ⚡ Salvando verrà scaricato il PDF compilato (Passaggio 1/2) e rimarrà attivo l'avviso per caricare la scansione firmata (Passaggio 2/2).
-          </span>
-          <div style="display: flex; gap: 10px;">
-            <button type="button" class="btn btn-secondary" data-close="contractBuilderModal">Chiudi</button>
-            <button type="submit" class="btn btn-primary">
-              🖨️ Salva & Genera PDF Compilato da Stampare
-            </button>
-          </div>
-        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;"><button type="button" class="btn btn-secondary" data-close="contractBuilderModal">Chiudi</button><button type="submit" class="btn btn-primary">🖨️ Salva & Genera PDF</button></div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== MODALE AGGIUNGI / MODIFICA TRACCIA ==================== -->
   <div id="trackModal" class="modal-backdrop">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 id="trackModalTitle">Aggiungi Traccia a Catalogo VNSR</h2>
-        <button type="button" class="close-btn" data-close="trackModal">✕</button>
-      </div>
+      <div class="modal-header"><h2 id="trackModalTitle">Aggiungi Traccia</h2><button type="button" class="close-btn" data-close="trackModal">✕</button></div>
       <form id="trackForm">
         <input type="hidden" id="trackIdInput" />
         <div class="form-grid">
-          <div class="form-group">
-            <label for="trackArtistSelect">Artista di Riferimento (Catalogo) *</label>
-            <select id="trackArtistSelect" class="form-control" required></select>
-          </div>
-
-          <div class="form-group">
-            <label for="trackTitleInput">Nome della Canzone (Titolo) *</label>
-            <input
-              type="text"
-              id="trackTitleInput"
-              class="form-control"
-              placeholder="Es. Notte d'Inverno"
-              required
-            />
-          </div>
-
-          <!-- BOX CREDITI IN RILIEVO: ARTISTA PRINCIPALE & PRODUCER -->
+          <div class="form-group"><label>Artista *</label><select id="trackArtistSelect" class="form-control" required></select></div>
+          <div class="form-group"><label>Titolo *</label><input type="text" id="trackTitleInput" class="form-control" required /></div>
+          
           <div class="form-group full" style="background: rgba(124,92,255,0.06); border: 1px solid var(--border-strong); padding: 14px; border-radius: 12px;">
-            <div style="font-size: 12px; font-weight: 800; color: var(--accent-gold); margin-bottom: 10px; text-transform: uppercase;">
-              ⭐ Grafica Crediti in Rilievo (Artista & Producer — Preselezionabili da Anagrafica)
-            </div>
             <datalist id="anagraficaAllNamesList"></datalist>
             <div class="form-grid">
               <div class="form-group" style="margin-bottom: 0;">
-                <label for="trackMainArtistDisplay" style="color: var(--accent-gold);">
-                  🎤 Artista Principale (In Rilievo) *
-                </label>
-                <input
-                  type="text"
-                  id="trackMainArtistDisplay"
-                  class="form-control"
-                  list="anagraficaAllNamesList"
-                  placeholder="Nome d'arte o Nome/Cognome da Anagrafica"
-                  required
-                />
-                <div class="preselect-anagrafica-box" style="margin-top: 6px;">
-                  <div class="preselect-anagrafica-label">
-                    <span>🎤 Preseleziona da Anagrafica:</span>
-                  </div>
-                  <div id="trackMainArtistQuickPills" class="preselect-pills-bar"></div>
-                </div>
+                <label style="color: var(--accent-gold);">🎤 Artista Principale *</label>
+                <input type="text" id="trackMainArtistDisplay" class="form-control" list="anagraficaAllNamesList" required />
+                <div id="trackMainArtistQuickPills" class="preselect-pills-bar" style="margin-top:6px;"></div>
               </div>
               <div class="form-group" style="margin-bottom: 0;">
-                <label for="trackProducerInput" style="color: var(--accent-cyan);">
-                  🎛️ Producer / Prod. by (In Rilievo) *
-                </label>
-                <input
-                  type="text"
-                  id="trackProducerInput"
-                  class="form-control"
-                  list="anagraficaAllNamesList"
-                  placeholder="Es. Blacklord / Collaboratore da Anagrafica..."
-                  required
-                />
-                <div class="preselect-anagrafica-box" style="margin-top: 6px;">
-                  <div class="preselect-anagrafica-label">
-                    <span>🤝 Preseleziona Producer / Collaboratore da Anagrafica:</span>
-                  </div>
-                  <div id="trackProducerQuickPills" class="preselect-pills-bar"></div>
-                </div>
+                <label style="color: var(--accent-cyan);">🎛️ Producer *</label>
+                <input type="text" id="trackProducerInput" class="form-control" list="anagraficaAllNamesList" required />
+                <div id="trackProducerQuickPills" class="preselect-pills-bar" style="margin-top:6px;"></div>
               </div>
             </div>
           </div>
 
           <div class="form-group full">
-            <label for="trackFeaturedInput">
-              🤝 Collaboratori & Artisti per Featuring o Diritti (Feat., Autori, Mix & Master — clicca sulle persone in Anagrafica qui sotto)
-            </label>
-            <input
-              type="text"
-              id="trackFeaturedInput"
-              class="form-control"
-              list="anagraficaAllNamesList"
-              placeholder="Es. Feat. Riovale, Diritti: Marco Rossi..."
-            />
-            <div class="preselect-anagrafica-box" style="margin-top: 6px;">
-              <div class="preselect-anagrafica-label">
-                <span>⚡ Persone in Anagrafica preselezionabili per Featuring o Diritti (clicca per aggiungere/rimuovere):</span>
-              </div>
-              <div id="trackFeaturedQuickPills" class="preselect-pills-bar"></div>
-            </div>
+            <label>🤝 Featuring & Diritti</label>
+            <input type="text" id="trackFeaturedInput" class="form-control" list="anagraficaAllNamesList" />
+            <div id="trackFeaturedQuickPills" class="preselect-pills-bar" style="margin-top:6px;"></div>
           </div>
 
-          <div class="form-group">
-            <label for="trackUpcInput">Codice UPC (12-13 cifre) *</label>
-            <input
-              type="text"
-              id="trackUpcInput"
-              class="form-control"
-              placeholder="Es. 8051234567890"
-              required
-            />
-          </div>
+          <div class="form-group"><label>UPC *</label><input type="text" id="trackUpcInput" class="form-control" required /></div>
+          <div class="form-group"><label>ISRC *</label><input type="text" id="trackIsrcInput" class="form-control" required /></div>
 
-          <div class="form-group">
-            <label for="trackIsrcInput">Codice ISRC *</label>
-            <input
-              type="text"
-              id="trackIsrcInput"
-              class="form-control"
-              placeholder="Es. IT-VNS-26-00001"
-              required
-            />
-          </div>
-
-          <!-- DATA E ORA DI USCITA DEL SINGOLO O DELL'ALBUM + ALERT NOTIFICHE OPERATORI -->
           <div class="form-group full track-release-schedule-box">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
-              <label style="margin-bottom: 0; color: #e9d5ff; font-weight: 800;">
-                🚀 Data e Ora di Uscita (Singolo / Album) *
-              </label>
-              <span class="release-notif-hint-badge">
-                🔔 Notifica automatica a ogni operatore: -7gg • -3gg • -1g • Ora esatta d'uscita
-              </span>
-            </div>
-            <div class="form-grid-3" style="gap: 10px;">
-              <div class="form-group" style="margin-bottom: 0;">
-                <label for="trackReleaseTypeSelect">Formato Uscita *</label>
-                <select id="trackReleaseTypeSelect" class="form-control" required>
-                  <option value="Singolo">💿 Singolo</option>
-                  <option value="Album">📀 Album</option>
-                  <option value="EP">🎶 EP</option>
-                </select>
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label for="trackReleaseDateInput">Data di Uscita *</label>
-                <input type="date" id="trackReleaseDateInput" class="form-control" required />
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label for="trackReleaseTimeInput">Ora Esatta di Uscita *</label>
-                <input type="time" id="trackReleaseTimeInput" class="form-control" value="00:00" required />
-              </div>
+            <label style="color: #e9d5ff; font-weight: 800;">🚀 Data e Ora Uscita *</label>
+            <div class="form-grid-3">
+              <div class="form-group"><select id="trackReleaseTypeSelect" class="form-control" required><option value="Singolo">💿 Singolo</option><option value="Album">📀 Album</option><option value="EP">🎶 EP</option></select></div>
+              <div class="form-group"><input type="date" id="trackReleaseDateInput" class="form-control" required /></div>
+              <div class="form-group"><input type="time" id="trackReleaseTimeInput" class="form-control" required /></div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Copertina della Canzone (Immagine)</label>
-            <label class="file-dropzone" for="trackCoverFile">
-              <input type="file" id="trackCoverFile" accept="image/*" />
-              <div id="trackCoverFileLabel" style="font-size: 13px; color: var(--text-secondary);">
-                🖼️ <strong>Carica Copertina</strong> (JPG, PNG, WebP)
-              </div>
-            </label>
-          </div>
-
-          <div class="form-group">
-            <label>File Audio Traccia (MP3 / WAV)</label>
-            <label class="file-dropzone" for="trackAudioFile">
-              <input type="file" id="trackAudioFile" accept="audio/mpeg,audio/mp3,audio/*" />
-              <div id="trackAudioFileLabel" style="font-size: 13px; color: var(--text-secondary);">
-                🎵 <strong>Carica File MP3</strong> della traccia
-              </div>
-            </label>
-          </div>
+          <div class="form-group"><label class="file-dropzone" for="trackCoverFile"><input type="file" id="trackCoverFile" accept="image/*" /><div id="trackCoverFileLabel">🖼️ Carica Copertina</div></label></div>
+          <div class="form-group"><label class="file-dropzone" for="trackAudioFile"><input type="file" id="trackAudioFile" accept="audio/*" /><div id="trackAudioFileLabel">🎵 Carica MP3</div></label></div>
         </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
-          <button type="button" class="btn btn-secondary" data-close="trackModal">Annulla</button>
-          <button type="submit" class="btn btn-primary">💾 Salva Traccia nel Catalogo</button>
-        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;"><button type="button" class="btn btn-secondary" data-close="trackModal">Annulla</button><button type="submit" class="btn btn-primary">💾 Salva</button></div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== FINESTRA POPUP CALENDARIO CON GLI APPUNTAMENTI ==================== -->
   <div id="calendarWindowModal" class="modal-backdrop" style="z-index: 2300;">
     <div class="modal-dialog calendar-window-dialog">
       <div class="modal-header">
-        <div>
-          <h2>📅 Finestra Calendario Appuntamenti VNSR & Apple Calendar</h2>
-          <p style="font-size: 12.5px; color: var(--text-secondary); margin-top: 3px;">
-            Clicca su un giorno per vedere o creare appuntamenti sincronizzati con Apple Calendar e Firebase.
-          </p>
-        </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="openAppleAuthModal()">
-            🍎 Account Apple
-          </button>
-          <button type="button" class="btn btn-primary btn-sm" onclick="openAppointmentModalForSelectedDate()">
-            ➕ Nuovo Evento (Upload)
-          </button>
+        <h2>📅 Finestra Calendario VNSR & Apple</h2>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openAppleAuthModal()">🍎 Account Apple</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAppointmentModalForSelectedDate()">➕ Nuovo Evento</button>
           <button type="button" class="close-btn" data-close="calendarWindowModal">✕</button>
         </div>
       </div>
-
       <div class="calendar-layout">
         <div class="calendar-board">
           <div class="calendar-board-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(-1)">◀ Mese Prec.</button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="resetCalendarToToday()">Oggi</button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(1)">Mese Succ. ▶</button>
-            </div>
-            <div id="popupCalendarMonthTitle" class="calendar-month-title">Ottobre 2026</div>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="syncFromAppleCalendar()">
-              🔄 Ricevi da Apple Calendar
-            </button>
+            <div style="display: flex; gap: 8px;"><button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(-1)">◀</button><button type="button" class="btn btn-secondary btn-sm" onclick="resetCalendarToToday()">Oggi</button><button type="button" class="btn btn-secondary btn-sm" onclick="changeCalendarMonth(1)">▶</button></div>
+            <div id="popupCalendarMonthTitle" class="calendar-month-title"></div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="syncFromAppleCalendar()">🔄 Ricevi</button>
           </div>
-
-          <div class="calendar-weekdays">
-            <div>Lun</div>
-            <div>Mar</div>
-            <div>Mer</div>
-            <div>Gio</div>
-            <div>Ven</div>
-            <div>Sab</div>
-            <div>Dom</div>
-          </div>
+          <div class="calendar-weekdays"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
           <div id="popupCalendarDaysGrid" class="calendar-days-grid"></div>
         </div>
-
         <aside class="calendar-sidebar">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <strong id="popupSelectedDayAgendaTitle" style="font-size: 14px;">Appuntamenti del Giorno</strong>
-            <button type="button" class="btn btn-primary btn-sm" onclick="openAppointmentModalForSelectedDate()">
-              ➕ Aggiungi
-            </button>
-          </div>
-          <div id="popupSelectedDayAppointmentsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 460px; overflow-y: auto;"></div>
+          <div style="display: flex; justify-content: space-between;"><strong id="popupSelectedDayAgendaTitle"></strong></div>
+          <div id="popupSelectedDayAppointmentsList"></div>
         </aside>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODALE ACCESSO MAIL APPLE CALENDAR (iCloud CalDAV) ==================== -->
   <div id="appleCalendarAuthModal" class="modal-backdrop" style="z-index: 2600;">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h2>🍎 Accesso Mail Apple Calendar (iCloud Sync Bidirezionale)</h2>
-        <button type="button" class="close-btn" data-close="appleCalendarAuthModal">✕</button>
-      </div>
-
+      <div class="modal-header"><h2>🍎 Accesso Mail Apple Calendar</h2><button type="button" class="close-btn" data-close="appleCalendarAuthModal">✕</button></div>
       <form id="appleCalendarAuthForm">
-        <div style="background: rgba(0, 212, 255, 0.08); border: 1px solid var(--accent-cyan-border); border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;">
-          <strong style="color: var(--accent-cyan); display: block; margin-bottom: 4px;">
-            ℹ️ Come funziona la connessione Bidirezionale Apple Calendar (Ricezione + Upload):
-          </strong>
-          Inserisci la tua <strong>E-mail Apple ID / iCloud</strong> e la <strong>Password Specifica per App</strong> (generabile in 10 secondi su <code>account.apple.com</code> → <em>Accesso e sicurezza</em> → <em>Password specifiche per le app</em>). Questo permette a VNSR sia di <strong>ricevere</strong> i tuoi appuntamenti da Apple Calendar, sia di <strong>scrivere in upload</strong> i nuovi eventi creati dal gestionale.
-        </div>
-
-        <div class="form-group">
-          <label for="appleCalEmailInput">E-mail Apple ID / iCloud *</label>
-          <input
-            type="email"
-            id="appleCalEmailInput"
-            class="form-control"
-            placeholder="Es. nomecognome@icloud.com"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="appleCalAppPasswordInput">Password Specifica per App iCloud (CalDAV Read/Write) *</label>
-          <input
-            type="password"
-            id="appleCalAppPasswordInput"
-            class="form-control"
-            placeholder="xxxx-xxxx-xxxx-xxxx"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="appleCalWebcalInput">URL Calendario Condiviso Webcal (Opzionale — per sola lettura rapida)</label>
-          <input
-            type="text"
-            id="appleCalWebcalInput"
-            class="form-control"
-            placeholder="Es. webcal://p123-caldav.icloud.com/published/2/..."
-          />
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 16px; flex-wrap: wrap;">
-          <button type="button" id="disconnectAppleCalBtn" class="btn btn-danger btn-sm">
-            Scollega Account
-          </button>
-          <div style="display: flex; gap: 10px;">
-            <button type="button" class="btn btn-secondary" data-close="appleCalendarAuthModal">Annulla</button>
-            <button type="submit" class="btn btn-primary">
-              🍎 Connetti & Ricevi Appuntamenti Apple
-            </button>
-          </div>
-        </div>
+        <div class="form-group"><label>E-mail Apple ID *</label><input type="email" id="appleCalEmailInput" class="form-control" required /></div>
+        <div class="form-group"><label>Password Specifica per App *</label><input type="password" id="appleCalAppPasswordInput" class="form-control" /></div>
+        <div class="form-group"><label>URL Webcal</label><input type="text" id="appleCalWebcalInput" class="form-control" /></div>
+        <div style="display: flex; justify-content: space-between; margin-top: 16px;"><button type="button" id="disconnectAppleCalBtn" class="btn btn-danger btn-sm">Scollega</button><button type="submit" class="btn btn-primary">🍎 Connetti</button></div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== MODALE CREA / MODIFICA APPUNTAMENTO (CON UPLOAD SU APPLE CALENDAR) ==================== -->
   <div id="appointmentFormModal" class="modal-backdrop" style="z-index: 2650;">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 id="appointmentModalTitle">➕ Nuovo Appuntamento VNSR</h2>
-        <button type="button" class="close-btn" data-close="appointmentFormModal">✕</button>
-      </div>
-
+      <div class="modal-header"><h2 id="appointmentModalTitle">➕ Nuovo Appuntamento</h2><button type="button" class="close-btn" data-close="appointmentFormModal">✕</button></div>
       <form id="appointmentForm">
         <input type="hidden" id="apptIdInput" />
         <div class="form-grid">
-          <div class="form-group full">
-            <label for="apptTitleInput">Titolo Appuntamento / Evento *</label>
-            <input
-              type="text"
-              id="apptTitleInput"
-              class="form-control"
-              placeholder="Es. Sessione Registrazione Vocals / Firma Contratto in Studio..."
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="apptDateInput">Data Appuntamento *</label>
-            <input type="date" id="apptDateInput" class="form-control" required />
-          </div>
-
-          <div class="form-group">
-            <label>Orario (Inizio — Fine) *</label>
-            <div style="display: flex; gap: 8px;">
-              <input type="time" id="apptStartTimeInput" class="form-control" value="15:00" required />
-              <input type="time" id="apptEndTimeInput" class="form-control" value="17:00" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="apptCategorySelect">Tipologia / Categoria *</label>
-            <select id="apptCategorySelect" class="form-control" required>
-              <option value="Studio & Rec">🎙️ Studio & Registrazione</option>
-              <option value="Contratto & Legal">📄 Contratto & Legal</option>
-              <option value="Release & Promo">💿 Release & Promo</option>
-              <option value="Apple Calendar">🍎 Evento Apple Calendar</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="apptArtistSelect">Artista o Collaboratore Collegato (Preselezionabile da Anagrafica)</label>
-            <select id="apptArtistSelect" class="form-control">
-              <option value="">— Nessun soggetto specifico —</option>
-            </select>
-          </div>
-
-          <div class="form-group full">
-            <label for="apptLocationInput">Luogo / Studio / Indirizzo</label>
-            <input
-              type="text"
-              id="apptLocationInput"
-              class="form-control"
-              placeholder="Es. VNSR Studio Principale / Call Zoom..."
-              value="VNSR Studio"
-            />
-          </div>
-
-          <div class="form-group full">
-            <label for="apptNotesInput">Note / Dettagli Operativi</label>
-            <textarea
-              id="apptNotesInput"
-              class="form-control"
-              rows="2"
-              placeholder="Dettagli per produttori, fonici o artisti..."
-            ></textarea>
-          </div>
-
-          <div class="form-group full" style="background: rgba(255, 69, 58, 0.09); border: 1px solid rgba(255, 69, 58, 0.35); border-radius: 12px; padding: 12px 14px;">
-            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; text-transform: none; color: var(--text-primary); font-size: 13.5px;">
-              <input type="checkbox" id="apptPushToAppleCheckbox" checked style="width: 18px; height: 18px;" />
-              <span>
-                🍎 <strong>Scrivi in upload su Apple Calendar (iCloud)</strong> e genera evento <code>.ics</code> sincronizzato
-              </span>
-            </label>
-          </div>
+          <div class="form-group full"><label>Titolo *</label><input type="text" id="apptTitleInput" class="form-control" required /></div>
+          <div class="form-group"><label>Data *</label><input type="date" id="apptDateInput" class="form-control" required /></div>
+          <div class="form-group"><label>Orario *</label><div style="display: flex; gap: 8px;"><input type="time" id="apptStartTimeInput" class="form-control" required /><input type="time" id="apptEndTimeInput" class="form-control" required /></div></div>
+          <div class="form-group"><label>Categoria *</label><select id="apptCategorySelect" class="form-control" required><option value="Studio & Rec">🎙️ Studio</option><option value="Contratto & Legal">📄 Legal</option><option value="Release & Promo">💿 Release</option><option value="Apple Calendar">🍎 Apple</option></select></div>
+          <div class="form-group"><label>Soggetto</label><select id="apptArtistSelect" class="form-control"></select></div>
+          <div class="form-group full"><label>Luogo</label><input type="text" id="apptLocationInput" class="form-control" /></div>
+          <div class="form-group full"><label>Note</label><textarea id="apptNotesInput" class="form-control"></textarea></div>
+          <div class="form-group full"><label><input type="checkbox" id="apptPushToAppleCheckbox" checked /> 🍎 Scrivi in upload su Apple Calendar</label></div>
         </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
-          <button type="button" class="btn btn-secondary" data-close="appointmentFormModal">Annulla</button>
-          <button type="submit" class="btn btn-primary">
-            ☁️ Salva & Invia in Upload al Calendario
-          </button>
-        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;"><button type="button" class="btn btn-secondary" data-close="appointmentFormModal">Annulla</button><button type="submit" class="btn btn-primary">☁️ Salva</button></div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== CARTELLA / FINESTRA IMPOSTAZIONI & IMPOSTAZIONE PROFILI ==================== -->
   <div id="settingsModal" class="modal-backdrop" style="z-index: 2700;">
     <div class="modal-dialog modal-lg settings-modal-dialog">
       <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span class="settings-folder-badge">⚙️</span>
-          <div>
-            <h2 id="settingsModalTitle" style="margin: 0;">📁 Cartella Impostazioni</h2>
-            <p id="settingsModalSubtitle" style="margin: 3px 0 0; font-size: 12.5px; color: var(--text-muted);">
-              Pannello di configurazione generale e gestione profili operatore VNSR
-            </p>
-          </div>
-        </div>
-        <button type="button" class="close-btn" data-close="settingsModal">✕</button>
+        <h2 id="settingsModalTitle">📁 Impostazioni</h2><button type="button" class="close-btn" data-close="settingsModal">✕</button>
       </div>
-
-      <!-- STEP 1: MENU PRINCIPALE CARTELLA IMPOSTAZIONI -->
       <div id="settingsHomeView" class="settings-view">
         <div class="settings-folder-grid">
-          <!-- VOCE PRINCIPALE: IMPOSTAZIONE PROFILI (PROTETTA DA PIN DEI 4 PROFILI) -->
-          <div id="openProfileSettingsItemBtn" class="settings-folder-card settings-folder-card-primary" role="button" tabindex="0">
-            <div class="settings-folder-card-icon">👥</div>
-            <div class="settings-folder-card-body">
-              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span class="settings-folder-card-title">Impostazione Profili</span>
-                <span class="settings-pin-badge">🔐 Richiede PIN all'ingresso</span>
-              </div>
-              <p class="settings-folder-card-desc">
-                Gestisci i <strong>4 profili operatore</strong> creati in VNSR e modifica liberamente i relativi <strong>4 codici PIN</strong>, nomi e ruoli. L'accesso a questa sezione è consentito solo inserendo uno dei 4 codici attivi.
-              </p>
-            </div>
-            <div class="settings-folder-card-arrow">➔</div>
+          <div id="openProfileSettingsItemBtn" class="settings-folder-card settings-folder-card-primary" role="button">
+            <div class="settings-folder-card-body"><span class="settings-folder-card-title">Gestione codici PIN, nomi e ruoli operatori</span></div><div class="settings-folder-card-arrow">➔</div>
           </div>
-
-          <!-- SCORCIATOIA: SINCRONIZZAZIONE CLOUD & RETE -->
-          <div id="settingsOpenSyncBtn" class="settings-folder-card" role="button" tabindex="0">
-            <div class="settings-folder-card-icon">☁️</div>
-            <div class="settings-folder-card-body">
-              <span class="settings-folder-card-title">Sincronizzazione Cloud & Ping 8.8.8.8</span>
-              <p class="settings-folder-card-desc">
-                Configura l'endpoint Firebase Realtime Database e verifica lo stato della sincronizzazione tra dispositivi.
-              </p>
-            </div>
-            <div class="settings-folder-card-arrow">➔</div>
+          <div id="settingsOpenSyncBtn" class="settings-folder-card" role="button">
+            <div class="settings-folder-card-body"><span class="settings-folder-card-title">Sincronizzazione cloud</span></div><div class="settings-folder-card-arrow">➔</div>
           </div>
-
-          <!-- SCORCIATOIA: APPLE CALENDAR -->
-          <div id="settingsOpenAppleCalBtn" class="settings-folder-card" role="button" tabindex="0">
-            <div class="settings-folder-card-icon">🍎</div>
-            <div class="settings-folder-card-body">
-              <span class="settings-folder-card-title">Account Apple Calendar (iCloud CalDAV)</span>
-              <p class="settings-folder-card-desc">
-                Collega o aggiorna la mail Apple ID e la Password Specifica per App per ricevere e inviare appuntamenti.
-              </p>
-            </div>
-            <div class="settings-folder-card-arrow">➔</div>
+          <div id="settingsOpenAppleCalBtn" class="settings-folder-card" role="button">
+            <div class="settings-folder-card-body"><span class="settings-folder-card-title">Collega/aggiorna Apple Calendar</span></div><div class="settings-folder-card-arrow">➔</div>
           </div>
-
-          <!-- STATO SOFTWARE DI AGGIORNAMENTO AUTOMATICO -->
-          <div class="settings-folder-card" style="cursor: default;">
-            <div class="settings-folder-card-icon">🔄</div>
-            <div class="settings-folder-card-body">
-              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span class="settings-folder-card-title">Software di Aggiornamento Automatico</span>
-                <span id="currentAppVersionBadge" class="settings-pin-badge" style="background: rgba(52, 211, 153, 0.16); border-color: rgba(52, 211, 153, 0.5); color: #6ee7b7;">
-                  Versione v1.0.2 • Auto-Update Attivo
-                </span>
-              </div>
-              <p id="autoUpdateSettingsDesc" class="settings-folder-card-desc">
-                Ogni modifica effettuata viene caricata sul database (nodo <code>/vnsr_app_release</code>). Prima dell'apertura del gestionale, il programma verifica in automatico se è presente una nuova versione e la scarica/installa senza richiedere passaggi manuali.
-              </p>
-            </div>
+          <div class="settings-folder-card">
+            <div class="settings-folder-card-body"><span class="settings-folder-card-title">Software Aggiornamento Automatico</span></div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 2: GATE PIN DI ACCESSO ALLA VOCE "IMPOSTAZIONE PROFILI" -->
       <div id="settingsProfilesPinGateView" class="settings-view" style="display: none;">
         <div class="settings-pin-gate-box">
-          <div class="settings-pin-gate-header">
-            <div class="settings-pin-lock-icon">🔐</div>
-            <h3>Accesso Riservato — <em>Impostazione Profili</em></h3>
-            <p>
-              Inserisci <strong>uno dei 4 codici PIN operatore</strong> attualmente attivi per entrare nella sezione di gestione e modifica dei 4 profili.
-            </p>
+          <h3>Accesso Riservato</h3>
+          <div class="pin-input-wrapper"><input type="password" id="settingsGatePinInput" class="pin-input" maxlength="4" /></div>
+          <div id="settingsGatePinError" class="pin-error"></div>
+          <div class="keypad" style="max-width: 280px; margin: 0 auto;">
+            <button type="button" class="key-btn settings-gate-key" data-skey="1">1</button><button type="button" class="key-btn settings-gate-key" data-skey="2">2</button><button type="button" class="key-btn settings-gate-key" data-skey="3">3</button>
+            <button type="button" class="key-btn settings-gate-key" data-skey="4">4</button><button type="button" class="key-btn settings-gate-key" data-skey="5">5</button><button type="button" class="key-btn settings-gate-key" data-skey="6">6</button>
+            <button type="button" class="key-btn settings-gate-key" data-skey="7">7</button><button type="button" class="key-btn settings-gate-key" data-skey="8">8</button><button type="button" class="key-btn settings-gate-key" data-skey="9">9</button>
+            <button type="button" class="key-btn settings-gate-key" data-skey="clear">C</button><button type="button" class="key-btn settings-gate-key" data-skey="0">0</button><button type="button" class="key-btn settings-gate-key" data-skey="enter">➔</button>
           </div>
-
-          <div class="pin-input-wrapper" style="max-width: 260px; margin: 0 auto 12px;">
-            <input
-              type="password"
-              id="settingsGatePinInput"
-              class="pin-input"
-              maxlength="4"
-              placeholder=""
-              inputmode="numeric"
-              autocomplete="off"
-            />
-          </div>
-
-          <div id="settingsGatePinError" class="pin-error" style="min-height: 22px; margin-bottom: 12px;"></div>
-
-          <div class="keypad" style="max-width: 280px; margin: 0 auto 18px;">
-            <button type="button" class="key-btn settings-gate-key" data-skey="1">1</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="2">2</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="3">3</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="4">4</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="5">5</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="6">6</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="7">7</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="8">8</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="9">9</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="clear">C</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="0">0</button>
-            <button type="button" class="key-btn settings-gate-key" data-skey="enter">➔</button>
-          </div>
-
-          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <button type="button" id="backToSettingsHomeFromGateBtn" class="btn btn-secondary">
-              ← Torna a Impostazioni
-            </button>
-            <button type="button" id="unlockProfilesSettingsBtn" class="btn btn-primary">
-              🔓 Entra in Impostazione Profili
-            </button>
-          </div>
+          <button type="button" id="backToSettingsHomeFromGateBtn" class="btn btn-secondary" style="margin-top:12px;">← Torna</button>
         </div>
       </div>
 
-      <!-- STEP 3: SEZIONE GESTIONE DEI 4 PROFILI (MODIFICA DIRETTA SENZA RICHIEDERE IL CODICE ATTUALE) -->
       <div id="settingsProfilesEditorView" class="settings-view" style="display: none;">
-        <div class="settings-profiles-banner">
-          <div>
-            <strong style="color: var(--text-primary); display: block; font-size: 14px;">
-              ✅ Accesso Autorizzato — Gestione dei 4 Profili Operatore VNSR
-            </strong>
-            <span style="font-size: 12.5px; color: var(--text-secondary);">
-              Puoi modificare direttamente il <strong>Codice PIN (4 cifre)</strong>, il <strong>Nome Profilo</strong> e il <strong>Ruolo</strong> di ciascuno dei 4 profili senza dover reinserire il codice attuale.
-            </span>
-          </div>
-          <button type="button" id="backToSettingsHomeFromEditorBtn" class="btn btn-secondary btn-sm">
-            ← Torna a Impostazioni
-          </button>
-        </div>
-
         <form id="profilesManagementForm">
-          <div id="profilesEditorGrid" class="profiles-editor-grid">
-            <!-- Popolato dinamicamente da app.js con i 4 profili -->
-          </div>
-
-          <div id="profilesEditorError" class="pin-error" style="min-height: 20px; margin-top: 10px; text-align: center;"></div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap;">
-            <button type="button" id="resetDefaultProfilesBtn" class="btn btn-secondary btn-sm">
-              ↺ Ripristina Codici Predefiniti
-            </button>
-            <div style="display: flex; gap: 10px;">
-              <button type="button" class="btn btn-secondary" data-close="settingsModal">Chiudi</button>
-              <button type="submit" class="btn btn-primary">
-                💾 Salva Modifiche ai 4 Profili
-              </button>
-            </div>
+          <div id="profilesEditorGrid" class="profiles-editor-grid"></div>
+          <div id="profilesEditorError" class="pin-error"></div>
+          <div style="display: flex; justify-content: space-between; margin-top: 16px;">
+            <button type="button" id="resetDefaultProfilesBtn" class="btn btn-secondary btn-sm">↺ Ripristina Default</button>
+            <div style="display: flex; gap: 10px;"><button type="button" class="btn btn-secondary" data-close="settingsModal">Chiudi</button><button type="submit" class="btn btn-primary">💾 Salva Modifiche</button></div>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- DICITURA VERSIONE CORRENTE IN FONDO A DESTRA -->
-  <div id="bottomRightVersionLabel" class="bottom-version-label" title="Versione corrente del gestionale VNSR">
-    v1.0.7
-  </div>
-
+  <div id="bottomRightVersionLabel" class="bottom-version-label" title="Versione corrente del gestionale VNSR">v1.0.7</div>
   <div id="toastContainer" class="toast-container"></div>
 
-  <!-- PDF-Lib & Template Contratto Ufficiale VNSR -->
+  <!-- PDF-Lib -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="contract-template-data.js"></script>
 
-  <!-- Firebase Official Web SDK (App + Auth + Realtime Database) -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  
+  <!-- Entry Point -->
   <script type="module" src="main.js"></script>
-  <script>
-    // Fallback automatico SOLO se aperto direttamente via file:// (dove i browser bloccano i moduli ES6 per CORS)
-    if (window.location.protocol === "file:") {
-      window.addEventListener("load", function () {
-        if (!window.__vnsrModuleLoaded) {
-          var fallbackScript = document.createElement("script");
-          fallbackScript.src = "app.js";
-          document.body.appendChild(fallbackScript);
-        }
-      });
-    }
-  </script>
 </body>
 </html>
