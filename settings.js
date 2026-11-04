@@ -11,8 +11,10 @@ import {
   showToast,
   recordActivity,
   saveApplicationData,
-  renderAll
+  renderAll,
+  firebase_db
 } from "./main.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 import {
   DEFAULT_PROFILES,
@@ -296,10 +298,15 @@ export function initSettingsEvents() {
       renderAll();
       showToast("✅ I 4 profili e i nuovi codici PIN sono stati salvati e sincronizzati!");
       saveApplicationData();
+      
+      // Sincronizzazione Firebase Profili/Impostazioni
+      if (firebase_db) {
+        set(ref(firebase_db, "profiles"), savedList).catch(e => console.error("Errore Firebase set profiles:", e));
+      }
     });
   }
 
-  document.getElementById("resetDefaultProfilesBtn")?.addEventListener("click", () => {
+ document.getElementById("resetDefaultProfilesBtn")?.addEventListener("click", () => {
     const defaultsCopy = DEFAULT_PROFILES.map((d) => ({ ...d, updatedAt: new Date().toISOString() }));
     saveProfilesList(defaultsCopy);
     renderProfilesEditorCards();
