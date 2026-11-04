@@ -16,6 +16,7 @@ import {
   renderAll
 } from "./main.js";
 
+import { stripPinCodes } from "./auth.js"; // AGGIUNTO
 import { renderTracks } from "./tracks.js";
 
 // ==================== STATO LOCALE DEL MODULO ANAGRAFICA & CONTRATTI ====================
@@ -639,6 +640,7 @@ export function renderArtists() {
       const hasStep2 = Boolean(artist.contractFileUrl);
       const isSigned = hasStep2 || artist.contractStatus === "Firmato e Attivo";
 
+      // MODIFICATO: Rimozione di "(Controllo 2 Fattori)" dal titolo e stripPinCodes() per il creatore
       return `
         <article class="artist-card" style="animation-delay: ${Math.min(idx * 55, 350)}ms;">
           <div class="artist-card-header">
@@ -664,7 +666,7 @@ export function renderArtists() {
           <div class="contract-box">
             <div class="contract-top">
               <strong style="font-size: 12px; color: var(--text-primary); text-transform: uppercase;">
-                🔐 Contratto & Diritti VNSR (Controllo 2 Fattori)
+                🔐 Contratto & Diritti VNSR
               </strong>
               ${
                 artist.contractDate
@@ -722,7 +724,7 @@ export function renderArtists() {
 
           <div class="artist-card-footer">
             <span style="font-size: 11px; color: var(--text-muted);">
-              Operatore: <strong>${escapeHtml(artist.createdBy || "VNSR")}</strong>
+              Operatore: <strong>${escapeHtml(stripPinCodes(artist.createdBy || "VNSR"))}</strong>
             </span>
             <div style="display: flex; gap: 6px;">
               <button type="button" class="btn btn-secondary btn-sm" onclick="openEditArtistModal('${artist.id}')">

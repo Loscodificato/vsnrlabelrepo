@@ -19,7 +19,8 @@ import {
   getProfilesList,
   saveProfilesList,
   getOperatorsMap,
-  updateOperatorUI
+  updateOperatorUI,
+  stripPinCodes // IMPORTATO per coerenza
 } from "./auth.js";
 
 import { openAppleAuthModal } from "./calendar.js";
@@ -89,7 +90,7 @@ export function renderProfilesEditorCards() {
             type="text"
             id="profNameInput_${idx}"
             class="form-control"
-            value="${escapeHtml(prof.name)}"
+            value="${escapeHtml(stripPinCodes(prof.name))}" 
             placeholder="Es. Losco"
             required
           />
@@ -150,7 +151,7 @@ export function attemptUnlockProfilesSettings() {
   if (settingsGatePinError) settingsGatePinError.textContent = "";
   settingsGatePinInput.value = "";
   showSettingsSubView("editor");
-  showToast(`🔓 Impostazione Profili sbloccata con il codice di ${matchedProfile.name} (#${matchedProfile.code})`);
+  showToast(`🔓 Impostazione Profili sbloccata con il codice di ${stripPinCodes(matchedProfile.name)}`);
 }
 
 export function initSettingsEvents() {
@@ -288,7 +289,7 @@ export function initSettingsEvents() {
 
       recordActivity(
         `Aggiornati i 4 profili operatore e codici PIN in Impostazione Profili: ${savedList
-          .map((p) => `${p.name} (#${p.code})`)
+          .map((p) => `${stripPinCodes(p.name)}`)
           .join(", ")}`
       );
 

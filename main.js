@@ -12,7 +12,8 @@ import {
   saveProfilesList,
   getOperatorsMap,
   initAuthGate,
-  updateOperatorUI
+  updateOperatorUI,
+  stripPinCodes // AGGIUNTO: import della funzione di pulizia
 } from "./auth.js";
 
 import {
@@ -339,7 +340,7 @@ export function renderNotificationsUI() {
 
   if (subEl) {
     if (state.currentOperator) {
-      subEl.textContent = `Operatore: ${state.currentOperator.name} (#${state.currentOperator.code}) • Avvisi: -7gg, -3gg, -1g e uscita`;
+      subEl.textContent = `Operatore: ${stripPinCodes(state.currentOperator.name)} • Avvisi: -7gg, -3gg, -1g e uscita`;
     } else {
       subEl.textContent = "Avvisi uscite (-7gg, -3gg, -1g e orario esatto di uscita)";
     }
@@ -580,7 +581,7 @@ export async function testFirebaseReadWrite() {
     progetto: "VNSR Gestionale Discografico",
     messaggio: "Test di scrittura e lettura completato con successo!",
     operatoreAttivo: state.currentOperator
-      ? `${state.currentOperator.name} (${state.currentOperator.code})`
+      ? `${stripPinCodes(state.currentOperator.name)}` // MODIFICATO
       : "Terminale VNSR",
     timestamp: new Date().toISOString(),
     testId: Math.floor(Math.random() * 100000)
@@ -938,7 +939,7 @@ export async function loadApplicationData() {
           "Contratto Discografico Esclusivo VNSR 360° — Royalty Master 70% VNSR / 30% Artista.",
         contractFileUrl: "",
         contractFileName: "Contratto_VNSR_KRYPTO_Firmato.pdf",
-        createdBy: "Losco (0070)",
+        createdBy: "Losco",
         createdAt: nowIso,
         updatedAt: nowIso
       }
@@ -956,7 +957,7 @@ export async function loadApplicationData() {
         coverUrl: "",
         audioUrl: "",
         audioFileName: "",
-        createdBy: "Losco (0070)",
+        createdBy: "Losco",
         createdAt: nowIso,
         updatedAt: nowIso
       }
@@ -1209,7 +1210,7 @@ export function recordActivity(actionText) {
   const op = state.currentOperator || { name: "Operatore", code: "----" };
   state.activityLog.unshift({
     id: "log_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
-    operatorName: op.name,
+    operatorName: stripPinCodes(op.name), // MODIFICATO
     operatorCode: op.code,
     action: actionText,
     timestamp: new Date().toISOString()
@@ -1248,14 +1249,13 @@ export function renderActivityLog() {
   container.innerHTML = state.activityLog
     .map((item) => {
       const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleString("it-IT") : "";
-      const opCode = item.operatorCode || "SYNC";
       const opName = item.operatorName || item.operator || "Operatore";
       const actText = item.action || item.text || "";
+      // MODIFICATO: Rimozione completa del tag <span class="operator-code"> e applicazione di stripPinCodes
       return `
         <div style="background: var(--bg-panel); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
           <div style="display: flex; align-items: center; gap: 12px;">
-            <span class="operator-code">#${escapeHtml(opCode)}</span>
-            <strong style="color: var(--accent-gold);">${escapeHtml(opName)}</strong>
+            <strong style="color: var(--accent-gold);">${escapeHtml(stripPinCodes(opName))}</strong>
             <span style="color: var(--text-primary); font-size: 14px;">${escapeHtml(actText)}</span>
           </div>
           <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap;">${escapeHtml(dateStr)}</span>

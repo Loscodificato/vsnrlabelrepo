@@ -23,6 +23,8 @@ import {
   renderAnagraficaPreselectablePills
 } from "./artists.js";
 
+import { stripPinCodes } from "./auth.js"; // AGGIUNTO
+
 // ==================== STATO LOCALE DEL MODULO TRACCE ====================
 let pendingCoverFile = null;
 let pendingAudioFile = null;
@@ -166,7 +168,7 @@ export function renderTracks() {
           </div>
 
           <div class="track-footer-meta">
-            <span>Operatore: <strong>${escapeHtml(track.createdBy || "VNSR")}</strong></span>
+            <span>Operatore: <strong>${escapeHtml(stripPinCodes(track.createdBy || "VNSR"))}</strong></span>
             <div style="display: flex; gap: 6px;">
               <button type="button" class="btn btn-secondary btn-sm" onclick="openEditTrackModal('${track.id}')">
                 ✏️ Modifica
